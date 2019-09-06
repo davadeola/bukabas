@@ -6,7 +6,17 @@ h1{
 
 .landing{
   background-color: #fff;
-  height: 90vh;
+  overflow: hidden;
+}
+
+.landing h1{
+  margin-top: 10%;
+  text-align: center;
+}
+
+.btn-row{
+  text-align: center;
+  margin-top: 5%;
 }
 
 .btn{

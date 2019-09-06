@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 
 const links = [
   { href: 'https://zeit.co/now', label: 'ZEIT' },
@@ -9,7 +10,12 @@ const links = [
   return link
 })
 
-const Nav = () => (
+const Nav = () => (<div>
+  <Head>
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css" key="test"/>
+    <link rel="stylesheet" href="/static/main.css" key="css1"/>
+  </Head>
   <nav>
     <ul>
       <li>
@@ -51,6 +57,7 @@ const Nav = () => (
       }
     `}</style>
   </nav>
+</div>
 )
 
 export default Nav

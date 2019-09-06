@@ -4,11 +4,11 @@ import Head from 'next/head'
 import Nav from '../components/nav'
 
 
-const Login = () => (
+const Signup = () => (
   <div>
     <Nav />
 
   </div>
 )
 
-export default Login
+export default Signup
