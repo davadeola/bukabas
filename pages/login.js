@@ -1,14 +1,53 @@
 import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
+import Layout from '../components/Layout'
 import Nav from '../components/nav'
+import {auth, firebase} from '../lib/firebase'
+import router from 'next/router'
 
+class Login extends React.Component{
+  state={
+    signedIn :false
+  }
 
-const Login = () => (
-  <div>
-    <Nav />
+  handleSignIn=(e)=>{
+    e.preventDefault();
+    const email=e.target.elements.email.value;
+    const password = e.target.elements.password.value;
 
-  </div>
-)
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(()=>{
+      this.setState({signedIn: true})
+      alert('You are signed In');
+      router.push('/passenger')
+    })
+    .catch(err=>{
+      alert('Oops! There was an error');
+      console.log(err.code);
+    })
+  }
+  render(){
+    return(
+      <Layout>
+
+      <div className="container">
+        <h1 className="text-center">Sign in</h1>
+        <form className="login-form" onSubmit={this.handleSignIn}>
+          <div className="form-group row">
+            <input name="email" type="email" placeholder="Enter your email" className="form-control"/>
+          </div>
+          <div className="form-group row">
+            <input name="password" type="password" placeholder="Enter your password" className="form-control"/>
+          </div>
+          <div>
+            <button type="submit" className="btn btn-primary">Sign in</button>
+          </div>
+        </form>
+      </div>
+    </Layout>)
+  }
+
+}
 
 export default Login

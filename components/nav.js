@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import Head from 'next/head'
+import Loginbtn from './loginbtn'
 
 const links = [
   { href: 'https://zeit.co/now', label: 'ZEIT' },
@@ -10,12 +10,7 @@ const links = [
   return link
 })
 
-const Nav = () => (<div>
-  <Head>
-    <title>Home</title>
-    <link rel="stylesheet" href="/static/bootstrap.min.css" key="test"/>
-    <link rel="stylesheet" href="/static/main.css" key="css1"/>
-  </Head>
+const Nav = (props) => (<div>
   <nav>
     <ul>
       <li>
@@ -56,6 +51,7 @@ const Nav = () => (<div>
         font-size: 13px;
       }
     `}</style>
+  <Loginbtn/>
   </nav>
 </div>
 )

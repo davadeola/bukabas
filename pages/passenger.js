@@ -3,13 +3,13 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Nav from '../components/nav'
 import Layout from '../components/Layout'
+import withAuth from '../lib/helpers/withAuth';
 
 
-const Signup = () => (
+const Passenger = () => (
   <Layout>
-
-
+      <h1>Ajhbdjdo </h1>
   </Layout>
 )
 
-export default Signup
+export default withAuth(Passenger)

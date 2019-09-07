@@ -25,3 +25,10 @@ h1{
   margin-left: 5%;
   width:7.5em;
 }
+
+form.login-form {
+  width: 30em;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
