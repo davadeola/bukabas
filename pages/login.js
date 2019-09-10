@@ -23,8 +23,8 @@ class Login extends React.Component{
       router.push('/passenger')
     })
     .catch(err=>{
-      alert('Oops! There was an error');
-      console.log(err.code);
+      alert(err.message);
+      console.log(err);
     })
   }
   render(){

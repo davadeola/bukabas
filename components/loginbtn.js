@@ -24,9 +24,10 @@ class Loginbtn extends React.Component {
     e.preventDefault();
     firebase.auth().signOut().then(function() {
       router.push('/');
+
     }).catch(function(error) {
       alert('Oops! There was an error');
-      console.log(err.code);
+      console.log(error.code);
     });
   }
 
