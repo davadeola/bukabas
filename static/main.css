@@ -1,17 +1,28 @@
 
 h1{
   font-size: 30px;
-  color:#58E1E1;
+  color:#22183c;
 }
 
+a, h1, p{
+  color: #22183c;
+}
+
+a:hover{
+  color: white;
+  text-decoration: none;
+}
 .landing{
-  background-color: #fff;
   overflow: hidden;
+  position: relative;
+  height: 100vh
 }
 
 .landing h1{
   margin-top: 10%;
   text-align: center;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 .btn-row{
@@ -23,6 +34,7 @@ h1{
   color: #000;
   background-color: #34d7d7;
   margin-left: 5%;
+  height: 3em;
   width:9.5em;
 }
 
@@ -31,4 +43,24 @@ form.login-form {
   display: block;
   margin: 0 auto;
   text-align: center;
+}
+
+.bg-light{
+  background-color: #34d7d7 !important;
+}
+
+.home-img{
+  z-index: -10;
+}
+#person{
+  position: absolute;
+  width: 35%;
+  left: 0;
+}
+
+#lady{
+  position: absolute;
+  width: 25%;
+  right: 0;
+  bottom: 1;
 }

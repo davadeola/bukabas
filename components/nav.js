@@ -9,15 +9,12 @@ class Nav extends React.Component{
   render(){
     return (
       <div>
-      <nav>
-
-            <Link href='/'>
-              <a>Home</a>
-            </Link>
-
-
-      <Loginbtn/>
-      </nav>
+        <nav className="navbar navbar-light bg-light">
+          <Link href='/'>
+            <a>Home</a>
+          </Link>
+          <Loginbtn/>
+        </nav>
     </div>
     )
 
