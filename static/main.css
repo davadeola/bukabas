@@ -1,4 +1,16 @@
+#loadscreen{
+  background-color: #fff;
+  position: absolute;
+  height: 90%;
+  width: 100%;
+  z-index: 1000;
+  opacity: 0.95;
+}
 
+#loadscreen img{
+  margin: 10% auto;
+  display: block;
+}
 h1{
   font-size: 30px;
   color:#22183c;

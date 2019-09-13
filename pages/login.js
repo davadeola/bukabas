@@ -5,21 +5,30 @@ import Layout from '../components/Layout'
 import Nav from '../components/nav'
 import {auth, firebase} from '../lib/firebase'
 import router from 'next/router'
+import Loadscreen from '../components/loadingScreen'
 
 class Login extends React.Component{
   state={
-    signedIn :false
+    signedIn :false,
+    showLoadScreen: false
+  }
+
+  showLoadScreen=()=>{
+    this.setState({
+      ...this.state,
+      showLoadScreen: true
+    })
   }
 
   handleSignIn=(e)=>{
     e.preventDefault();
+    this.showLoadScreen();
     const email=e.target.elements.email.value;
     const password = e.target.elements.password.value;
 
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(()=>{
       this.setState({signedIn: true})
-      alert('You are signed In');
       router.push('/passenger')
     })
     .catch(err=>{
@@ -30,7 +39,7 @@ class Login extends React.Component{
   render(){
     return(
       <Layout>
-
+      {this.state.showLoadScreen && <Loadscreen/>}
       <div className="container">
         <h1 className="text-center">Sign in</h1>
         <form className="login-form" onSubmit={this.handleSignIn}>
