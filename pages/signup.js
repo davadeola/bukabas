@@ -7,6 +7,9 @@ import Signupselect from '../components/signupselect'
 import Passform from '../components/passform'
 import Drivform from '../components/drivform'
 import Compform from '../components/compform'
+import router from 'next/router'
+import Loadscreen from '../components/loadingScreen'
+import {auth, firebase} from '../lib/firebase'
 
 class Signup extends React.Component {
   state = {
@@ -15,11 +18,31 @@ class Signup extends React.Component {
     email: '',
     password: '',
     conpassword:'',
-    busnumplate:''
+    busnumplate:'',
+    showLoadScreen: false
+  }
+
+  showLoadScreen=()=>{
+    this.setState({
+      ...this.state,
+      showLoadScreen: true
+    })
   }
 
   handleSignUp=(e)=>{
     e.preventDefault();
+    this.showLoadScreen();
+    const email = e.target.elements.email.value;
+    const password = e.target.elements.password.value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(()=>{
+      alert("Successfully created");
+      router.push('/login');
+    }).catch(err=>{
+      alert(err.message);
+      console.log(err);
+    })
 
   }
 
@@ -31,6 +54,7 @@ class Signup extends React.Component {
 
   render() {
     const RenderContent=()=>{
+
         if (this.state.userType =="passenger") {
            return <Passform handleSignUp={this.handleSignUp}/>
         } else if (this.state.userType =="driver") {
@@ -44,6 +68,7 @@ class Signup extends React.Component {
 
     return (
       <Layout>
+          {this.state.showLoadScreen && <Loadscreen/>}
         <RenderContent />
 
         <Link href='login'>

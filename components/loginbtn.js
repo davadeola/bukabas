@@ -22,12 +22,13 @@ class Loginbtn extends React.Component {
 
   handleSignOut = (e) => {
     e.preventDefault();
-    firebase.auth().signOut().then(function() {
+    firebase.auth().signOut().then(()=>{
+      this.setState({isLoggedIn: false});
       router.push('/');
 
     }).catch(function(error) {
       alert('Oops! There was an error');
-      console.log(error.code);
+      console.log(error);
     });
   }
 

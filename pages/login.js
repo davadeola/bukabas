@@ -34,6 +34,7 @@ class Login extends React.Component{
     .catch(err=>{
       alert(err.message);
       console.log(err);
+      router.push('/login')
     })
   }
   render(){
