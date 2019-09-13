@@ -15,16 +15,10 @@ const Home=()=>(
                 </Link>
               </div></div>
             <div className="col-md-4">  <img src="/static/images/lady.png" id="lady" className="home-img"/></div>
-
           </div>
-
-
-
-
-
-
-
         </div>
+
+        
 
     </Layout>
     );
