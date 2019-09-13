@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Layout from '../components/Layout'
+import About from '../components/About'
 
 const Home=()=>(
     <Layout>
@@ -18,7 +19,8 @@ const Home=()=>(
           </div>
         </div>
 
-        
+      <About/>
+
 
     </Layout>
     );

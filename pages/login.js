@@ -40,7 +40,7 @@ class Login extends React.Component{
     return(
       <Layout>
       {this.state.showLoadScreen && <Loadscreen/>}
-      <div className="container">
+      <div className="container loading">
         <h1 className="text-center">Sign in</h1>
         <form className="login-form" onSubmit={this.handleSignIn}>
           <div className="form-group row">

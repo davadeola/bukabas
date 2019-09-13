@@ -11,7 +11,9 @@ const Layout = (props) => (<div>
     <link rel="stylesheet" href="/static/main.css" key="css1"/>
   </Head>
   <Nav/>
+  <div className="my-landing">
   {props.children}
+  </div>
 </div>
 )
 

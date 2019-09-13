@@ -44,7 +44,7 @@ class Signup extends React.Component {
 
     return (
       <Layout>
-        <RenderContent/>
+        <RenderContent />
 
         <Link href='login'>
           <a>

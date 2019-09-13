@@ -16,6 +16,10 @@ h1{
   color:#22183c;
 }
 
+.my-landing{
+  padding-top: 7.5%;
+}
+
 a, h1, p{
   color: #22183c;
 }
@@ -32,8 +36,6 @@ a:hover{
 .landing h1{
   margin-top: 25%;
   text-align: center;
-  /* margin-left: 25%;
-  margin-right: 25%; */
 }
 
 .btn-row{
@@ -79,8 +81,12 @@ display: none !important;
   box-sizing: border-box;
 }
 
-
-
 .home-img{
   width: 100%;
+}
+
+.about{
+  height: 75vh;
+  padding-top: 5em;
+  border-top: 1px solid #58e1e1;
 }

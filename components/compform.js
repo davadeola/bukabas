@@ -6,7 +6,7 @@ import Layout from '../components/Layout'
 
 const Compform=(props)=>(
 
-      <div className="container">
+      <div className="container ">
         <h1 className="text-center">Create a company account</h1>
         <form className="login-form" onSubmit={props.handleSignUp}>
           <div className="row">
