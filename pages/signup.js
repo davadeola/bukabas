@@ -12,70 +12,90 @@ import Loadscreen from '../components/loadingScreen'
 import {auth, firebase} from '../lib/firebase'
 
 class Signup extends React.Component {
+
+  static async getInitialProps() {
+    let db = await firebase.firestore();
+    let result = await new Promise((resolve, reject) => {
+      db.collection('passengers')
+      .get()
+      .then(snapshot => {
+        let data = [];
+        snapshot.forEach(doc=>{
+          data.push(Object.assign({
+            id:doc.id}, doc.data()))
+        })
+        resolve(data);
+
+      }).catch(error => {
+        reject([])
+      })
+    })
+    return {passengers: result};
+  }
+
   state = {
     userType: '',
     username: '',
     email: '',
     password: '',
-    conpassword:'',
-    busnumplate:'',
+    conpassword: '',
+    busnumplate: '',
     showLoadScreen: false
   }
 
-  showLoadScreen=()=>{
+  showLoadScreen = () => {
     this.setState({
       ...this.state,
       showLoadScreen: true
     })
   }
 
-  handleSignUp=(e)=>{
+  handleSignUp = (e) => {
     e.preventDefault();
     this.showLoadScreen();
     const email = e.target.elements.email.value;
     const password = e.target.elements.password.value;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(()=>{
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
       alert("Successfully created");
       router.push('/login');
-    }).catch(err=>{
+    }).catch(err => {
       alert(err.message);
       console.log(err);
     })
 
   }
 
-  handleSelect=(e)=>{
+  handleSelect = (e) => {
     e.preventDefault();
-    this.setState({userType:e.target.value});
+    this.setState({userType: e.target.value});
   }
 
-
   render() {
-    const RenderContent=()=>{
+    const passengers=this.props.passengers;
+    console.log(passengers);
 
-        if (this.state.userType =="passenger") {
-           return <Passform handleSignUp={this.handleSignUp}/>
-        } else if (this.state.userType =="driver") {
-           return <Drivform handleSignUp={this.handleSignUp}/>
-        } else if (this.state.userType =="company") {
-           return <Compform handleSignUp={this.handleSignUp}/>
-        } else {
-           return <Signupselect handleSelect={this.handleSelect}/>
-        }
+    const RenderContent = () => {
+      if (this.state.userType == "passenger") {
+        return <Passform handleSignUp={this.handleSignUp}/>
+      } else if (this.state.userType == "driver") {
+        return <Drivform handleSignUp={this.handleSignUp}/>
+      } else if (this.state.userType == "company") {
+        return <Compform handleSignUp={this.handleSignUp}/>
+      } else {
+        return <Signupselect handleSelect={this.handleSelect}/>
+      }
     }
 
-    return (
-      <Layout>
-          {this.state.showLoadScreen && <Loadscreen/>}
-        <RenderContent />
+    return (<Layout>
+      {this.state.showLoadScreen && <Loadscreen/>}
+      <RenderContent/>
 
-        <Link href='login'>
-          <a>
-            <p className="text-center">Already have an account? Login here</p>
-          </a>
-        </Link>
+      <Link href='login'>
+        <a>
+          <p className="text-center">Already have an account? Login here</p>
+        </a>
+      </Link>
 
     </Layout>)
   }
