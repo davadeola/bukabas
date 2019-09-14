@@ -94,7 +94,7 @@ display: none !important;
 }
 
 .menubar{
-  margin: .375%;
+  /* margin: .375%; */
   width: 97.75%;
   position: fixed;
   z-index: 1000;
