@@ -6,7 +6,7 @@ const Signupselect = (props) => (<div className="container">
 <div className="row">
   <div className="col-md-12">
   <h1 className="text-center">Sign up today</h1>
-  <form className="login-form">
+  <form className="">
     <div className="form-group row form-group-select" onChange={props.handleSelect}>
 
       <div className="col-md-4">

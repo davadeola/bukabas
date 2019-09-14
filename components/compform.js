@@ -12,10 +12,16 @@ const Compform=(props)=>(
           <div className="row">
             <div className="col-md-6">
               <div className="form-group row">
-                <input name="username" type="text" placeholder="Enter your company name" className="form-control" />
+                <input name="userHandle" type="text" placeholder="Enter your company user handle" className="form-control" />
+              </div>
+              <div className="form-group row">
+                <input name="fullName" type="text" placeholder="Enter your company full name" className="form-control" />
               </div>
               <div className="form-group row">
                 <input name="email" type="email" placeholder="Enter your email" className="form-control"/>
+              </div>
+              <div className="form-group row">
+                <input name="phone" type="text" placeholder="Enter your phone number" className="form-control"/>
               </div>
               <div className="form-group row">
                 <input name="password" type="password" placeholder="Enter your password" className="form-control"/>

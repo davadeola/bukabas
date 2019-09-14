@@ -10,18 +10,26 @@ const Passform=(props)=>(
         <h1 className="text-center">Create a  passenger account</h1>
         <form className="login-form" onSubmit={props.handleSignUp}>
           <div className="form-group row">
-            <input name="username" type="text" placeholder="Enter a user name" className="form-control" />
+            <input name="userHandle" type="text" placeholder="Enter a user handle" className="form-control" />
+          </div>
+          <div className="form-group row">
+            <input name="fullName" type="text" placeholder="Enter your full name" className="form-control" />
           </div>
           <div className="form-group row">
             <input name="email" type="email" placeholder="Enter your email" className="form-control"/>
           </div>
           <div className="form-group row">
+            <input name="phone" type="text" placeholder="Enter your phone number" className="form-control"/>
+          </div>
+          <div className="form-group row">
             <input name="password" type="password" placeholder="Enter your password" className="form-control"/>
           </div>
+
           <div className="form-group row">
             <input name="conpassword" type="password" placeholder="Confirm your password" className="form-control"/>
           </div>
-          <div>
+          <div className="form-group row">
+            <button className="btn btn-warning" onClick={props.backToSelect}>Back</button>
             <button type="submit" className="btn btn-primary">Create Account</button>
           </div>
         </form>

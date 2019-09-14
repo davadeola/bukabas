@@ -54,6 +54,11 @@ class Login extends React.Component{
             <button type="submit" className="btn btn-primary">Sign in</button>
           </div>
         </form>
+        <Link href='signup'>
+          <a>
+            <p className="text-center">New user? Click here to join the family</p>
+          </a>
+        </Link>
       </div>
     </Layout>)
   }

@@ -12,34 +12,13 @@ import Loadscreen from '../components/loadingScreen'
 import {auth, firebase} from '../lib/firebase'
 
 class Signup extends React.Component {
-
-  static async getInitialProps() {
-    let db = await firebase.firestore();
-    let result = await new Promise((resolve, reject) => {
-      db.collection('passengers')
-      .get()
-      .then(snapshot => {
-        let data = [];
-        snapshot.forEach(doc=>{
-          data.push(Object.assign({
-            id:doc.id}, doc.data()))
-        })
-        resolve(data);
-
-      }).catch(error => {
-        reject([])
-      })
-    })
-    return {passengers: result};
-  }
-
   state = {
-    userType: '',
-    username: '',
     email: '',
-    password: '',
-    conpassword: '',
-    busnumplate: '',
+    userHandle:'',
+    fullName: '',
+    password:'',
+    phone:'',
+    userType: '',
     showLoadScreen: false
   }
 
@@ -50,21 +29,56 @@ class Signup extends React.Component {
     })
   }
 
+
+  backToSelect=()=>{
+    this.setState({
+      ...this.state,
+      userType: ''
+    })
+  }
+
+
   handleSignUp = (e) => {
     e.preventDefault();
     this.showLoadScreen();
-    const email = e.target.elements.email.value;
-    const password = e.target.elements.password.value;
+    try {
+      this.setState({
+        email : e.target.elements.email.value,
+        password : e.target.elements.password.value,
+        userHandle : e.target.elements.userHandle.value,
+        fullName : e.target.elements.fullName.value,
+        phone:e.target.elements.phone.value,
+      }, ()=>{
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-      alert("Successfully created");
-      router.push('/login');
-    }).catch(err => {
-      alert(err.message);
-      console.log(err);
-    })
+      let db = firebase.firestore();
+      db.collection(this.state.userType).doc(this.state.userHandle).get()
+      .then(doc=>{
+        if (doc.exists) {
+          alert("This username already exists");
+          router.push('/signup');
+        } else {
+          firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(()=>{
+            const userCredentials={
+              email: this.state.email,
+              fullName: this.state.fullName,
+              phone:this.state.phone,
+              userType: this.state.userType
+            }
+            console.log(this.state.userHandle);
+            db.collection(this.state.userType).doc(this.state.userHandle).set(userCredentials).then(()=>{
+              alert("Successfully created");
+              var newRoute = '/'.concat(this.state.userType);
+              router.push(newRoute);
+            })
+          })
+        }
+      });
+    });
+    } catch (e) {
+      console.log(e);
+    }
 
-  }
+}
 
   handleSelect = (e) => {
     e.preventDefault();
@@ -72,12 +86,9 @@ class Signup extends React.Component {
   }
 
   render() {
-    const passengers=this.props.passengers;
-    console.log(passengers);
-
     const RenderContent = () => {
       if (this.state.userType == "passenger") {
-        return <Passform handleSignUp={this.handleSignUp}/>
+        return <Passform handleSignUp={this.handleSignUp} backToSelect={this.backToSelect}/>
       } else if (this.state.userType == "driver") {
         return <Drivform handleSignUp={this.handleSignUp}/>
       } else if (this.state.userType == "company") {
