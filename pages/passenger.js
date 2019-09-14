@@ -8,7 +8,7 @@ import withAuth from '../lib/helpers/withAuth';
 
 const Passenger = () => (
   <Layout>
-    
+
   </Layout>
 )
 

@@ -92,3 +92,48 @@ display: none !important;
   padding-top: 5em;
   border-top: 1px solid #58e1e1;
 }
+
+.menubar{
+  margin: .375%;
+  width: 97.75%;
+  position: fixed;
+  z-index: 1000;
+}
+.menu{
+  margin-top: 5px;
+  height: 3.75em;
+  padding: .5em;
+  width: 4.5em;
+  position: relative;
+  float: right;
+  cursor: pointer;
+}
+.menu :first-child{
+  background-color: black;
+  width: 3em;
+  height: .275em;
+  position: absolute;
+  top: 25%;
+  border-radius: 25%;
+  transition: .35s ease-in-out;
+}
+
+.menu :nth-child(2){
+  background-color: black;
+  width: 3em;
+  height: .275em;
+  position: absolute;
+  top: 50%;
+  border-radius: 25%;
+  transition: .35s ease-in-out;
+}
+
+.menu :nth-child(3){
+  background-color: black;
+  width: 3em;
+  height: .275em;
+  position: absolute;
+  top: 75%;
+  border-radius: 25%;
+  transition: .35s ease-in-out;
+}

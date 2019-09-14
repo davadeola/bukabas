@@ -10,7 +10,36 @@ import Loadscreen from '../components/loadingScreen'
 class Login extends React.Component{
   state={
     signedIn :false,
-    showLoadScreen: false
+    showLoadScreen: false,
+    userType: ''
+  }
+
+  verifyDbContent = (ref, email) => {
+    ref.where('email', '==', email).get().then(snapshot => {
+      if (!snapshot.empty) {
+        console.log('found');
+        this.setState({userType:ref.id}, ()=>{
+          var newRoute = '/'.concat(this.state.userType);
+          console.log(newRoute);
+          router.push(newRoute);
+        });
+        return;
+      }
+
+    }).catch(err => {
+      console.log('Error getting documents', err);
+    });
+  }
+
+  checkUserType = (email) => {
+    let done= new Promise(()=>{
+      let db = firebase.firestore();
+      let passenger = db.collection("passenger");
+      let driver = db.collection("driver");
+      this.verifyDbContent(passenger, email);
+      this.verifyDbContent(driver, email);
+    });
+    return done;
   }
 
   showLoadScreen=()=>{
@@ -28,8 +57,8 @@ class Login extends React.Component{
 
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(()=>{
-      this.setState({signedIn: true})
-      router.push('/passenger')
+      this.setState({signedIn: true});
+      this.checkUserType(email);
     })
     .catch(err=>{
       alert(err.message);

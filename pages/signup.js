@@ -64,7 +64,7 @@ class Signup extends React.Component {
               phone:this.state.phone,
               userType: this.state.userType
             }
-            console.log(this.state.userHandle);
+            // console.log(this.state.userHandle);
             db.collection(this.state.userType).doc(this.state.userHandle).set(userCredentials).then(()=>{
               alert("Successfully created");
               var newRoute = '/'.concat(this.state.userType);
@@ -90,7 +90,7 @@ class Signup extends React.Component {
       if (this.state.userType == "passenger") {
         return <Passform handleSignUp={this.handleSignUp} backToSelect={this.backToSelect}/>
       } else if (this.state.userType == "driver") {
-        return <Drivform handleSignUp={this.handleSignUp}/>
+        return <Drivform handleSignUp={this.handleSignUp} backToSelect={this.backToSelect}/>
       } else if (this.state.userType == "company") {
         return <Compform handleSignUp={this.handleSignUp}/>
       } else {
