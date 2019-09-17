@@ -88,9 +88,9 @@ display: none !important;
   width: 100%;
 }
 
-.map{
-  height: 100px;
-  width: 100px;
+.marker{
+  width: 2em;
+  height: 100%;
 }
 
 .about{
