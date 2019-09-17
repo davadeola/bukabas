@@ -9,6 +9,7 @@ const Layout = (props) => (<div>
     <title>Home</title>
     <link rel="stylesheet" href="/static/bootstrap.min.css" key="test"/>
     <link rel="stylesheet" href="/static/main.css" key="css1"/>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css"/>
   </Head>
   <Nav/>
   <div className="my-landing">

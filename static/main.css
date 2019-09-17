@@ -88,6 +88,11 @@ display: none !important;
   width: 100%;
 }
 
+.map{
+  height: 100px;
+  width: 100px;
+}
+
 .about{
   height: 75vh;
   padding-top: 5em;
