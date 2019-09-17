@@ -71,7 +71,7 @@ class Login extends React.Component{
       <Layout>
       {this.state.showLoadScreen && <Loadscreen/>}
       <div className="container loading">
-        <h1 className="text-center">Sign in</h1>
+        <h1 className="text-center">Log into your account</h1>
         <form className="login-form" onSubmit={this.handleSignIn}>
           <div className="form-group row">
             <input name="email" type="email" placeholder="Enter your email" className="form-control"/>

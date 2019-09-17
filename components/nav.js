@@ -9,7 +9,7 @@ class Nav extends React.Component{
   render(){
     return (
       <div>
-        <nav className="navbar navbar-light bg-light fixed-top">
+        <nav className="navbar navbar-light bg-light">
           <Link href='/'>
             <a>Home</a>
           </Link>

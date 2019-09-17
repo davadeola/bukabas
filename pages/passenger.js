@@ -7,7 +7,7 @@ import MenuLayout from '../components/MenuLayout'
 import withAuth from '../lib/helpers/withAuth';
 
 
-const Passenger = () => (
+const Passenger = (props) => (
   <Layout>
     <MenuLayout/>
   </Layout>

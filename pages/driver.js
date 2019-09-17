@@ -6,7 +6,7 @@ import Layout from '../components/Layout'
 import withAuth from '../lib/helpers/withAuth';
 
 
-const Driver = () => (
+const Driver = (props) => (
   <Layout>
 
   </Layout>
