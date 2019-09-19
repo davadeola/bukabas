@@ -36,8 +36,10 @@ class Login extends React.Component{
       let db = firebase.firestore();
       let passenger = db.collection("passenger");
       let driver = db.collection("driver");
+      let company = db.collection("company");
       this.verifyDbContent(passenger, email);
       this.verifyDbContent(driver, email);
+      this.verifyDbContent(company, email);
     });
     return done;
   }

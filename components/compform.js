@@ -10,7 +10,7 @@ const Compform=(props)=>(
         <h1 className="text-center">Create a company account</h1>
         <form className="login-form" onSubmit={props.handleSignUp}>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
               <div className="form-group row">
                 <input name="userHandle" type="text" placeholder="Enter your company user handle" className="form-control" />
               </div>
@@ -30,11 +30,7 @@ const Compform=(props)=>(
                 <input name="conpassword" type="password" placeholder="Confirm your password" className="form-control"/>
               </div>
             </div>
-            <div className="col-md-6">
-              <div className="form-group row">
-                <input name="profilepic" type="file" placeholder="Upload profile image" className="form-control"/>
-              </div>
-            </div>
+          
 
           </div>
 

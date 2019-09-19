@@ -98,3 +98,26 @@ display: none !important;
   padding-top: 5em;
   border-top: 1px solid #58e1e1;
 }
+
+.menu-layout{
+  background-color: #58e1e1;
+  height: 30rem;
+  padding: .5em;
+}
+
+.my-landing .col-md-4{
+  padding: 0;
+}
+.profile-layout{
+  height: 10rem;
+}
+
+.d-flex .flex-column{
+  align-items: center;
+  text-align: center;
+}
+
+.my-tab{
+  /* margin: .5em;
+  width: 25em; */
+}
