@@ -1,8 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import Head from 'next/head'
 import Layout from '../components/Layout'
-import Nav from '../components/nav'
 import {auth, firebase} from '../lib/firebase'
 import router from 'next/router'
 import Loadscreen from '../components/loadingScreen'
@@ -18,12 +16,12 @@ class Login extends React.Component{
     ref.where('email', '==', email).get().then(snapshot => {
       if (!snapshot.empty) {
         console.log('found');
-        this.setState({userType:ref.id}, ()=>{
-          var newRoute = '/'.concat(this.state.userType);
-          console.log(newRoute);
+        this.setState({userType:ref.id});
+          var newRoute = '/'.concat(ref.id);
+        console.log(newRoute);
           router.push(newRoute);
-        });
-        return;
+
+
       }
 
     }).catch(err => {
@@ -59,8 +57,10 @@ class Login extends React.Component{
 
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(()=>{
-      this.setState({signedIn: true});
-      this.checkUserType(email);
+      this.setState({signedIn: true},()=>{
+        this.checkUserType(email);
+      })
+
     })
     .catch(err=>{
       alert(err.message);

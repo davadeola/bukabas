@@ -58,7 +58,7 @@ class Signup extends React.Component {
           router.push('/signup');
         } else {
           firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(()=>{
-            const userCredentials={
+            let userCredentials={
               email: this.state.email,
               fullName: this.state.fullName,
               phone:this.state.phone,
