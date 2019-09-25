@@ -15,14 +15,9 @@ class Login extends React.Component{
   verifyDbContent = (ref, email) => {
     ref.where('email', '==', email).get().then(snapshot => {
       if (!snapshot.empty) {
-        console.log('found');
         this.setState({userType:ref.id});
           var newRoute = '/'.concat(ref.id);
-        console.log(newRoute);
-          router.push(newRoute);
-
-
-      }
+          router.push(newRoute);      }
 
     }).catch(err => {
       console.log('Error getting documents', err);

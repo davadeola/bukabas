@@ -73,7 +73,7 @@ class Company extends React.Component{
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-3">
-                  <MenuLayout display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} userType={props.userType}/>
+                  <MenuLayout display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} userType={this.props.userType}/>
               </div>
               <div className="col-md-9">
                 {displayView()}

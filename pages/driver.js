@@ -5,6 +5,7 @@ import Nav from '../components/nav'
 import Layout from '../components/Layout'
 import withAuth from '../lib/helpers/withAuth';
 import MenuLayout from '../components/MenuLayout'
+import Trip from '../components/Trip'
 
 
 class Driver extends React.Component{
@@ -13,11 +14,21 @@ class Driver extends React.Component{
 
   }
 
+  selectDest=(e)=>{
+    e.preventDefault();
+    const destination = e.target.elements.dest.value;
+    console.log(destination);
+  }
+
+  selectStartTrip=()=>{
+    this.setState({display:'startTrip'});
+    console.log(this.props.userType);
+  }
 
   render(){
     const displayView=()=>{
-      if (this.state.display=='addNew') {
-        return(<AddNewBus handleAddBus={this.handleAddBus}/>);
+      if (this.state.display=='startTrip') {
+        return(<Trip selectDest={this.selectDest}/>);
       } else if (this.state.display=='viewBus') {
         return(<ViewBus/>);
       } else {
@@ -35,7 +46,7 @@ class Driver extends React.Component{
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3">
-                <MenuLayout display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus}/>
+                <MenuLayout display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType}/>
             </div>
             <div className="col-md-9">
               {displayView()}

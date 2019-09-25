@@ -17,8 +17,16 @@ const MenuLayout = (props) => (
       </div>
       <div className="row ">
         <div className="d-flex flex-column">
-          <button className="btn my-tab" onClick={props.selectAddBus}>Add New Bus</button>
-          <button className="btn my-tab" onClick={props.selectViewBus}>View my bus</button>
+
+          {
+            props.userType=='company' &&
+            <div>
+              <button className="btn my-tab" onClick={props.selectAddBus}>Add New Bus</button>
+              <button className="btn my-tab" onClick={props.selectViewBus}>View my bus</button>
+            </div>
+            }
+          {props.userType=='driver' && <button className="btn my-tab" onClick={props.selectStartTrip}>Start a trip</button>}
+
           <button className="btn my-tab"></button>
         </div>
       </div>
