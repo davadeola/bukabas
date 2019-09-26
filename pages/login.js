@@ -12,30 +12,7 @@ class Login extends React.Component{
     userType: ''
   }
 
-  verifyDbContent = (ref, email) => {
-    ref.where('email', '==', email).get().then(snapshot => {
-      if (!snapshot.empty) {
-        this.setState({userType:ref.id});
-          var newRoute = '/'.concat(ref.id);
-          router.push(newRoute);      }
 
-    }).catch(err => {
-      console.log('Error getting documents', err);
-    });
-  }
-
-  checkUserType = (email) => {
-    let done= new Promise(()=>{
-      let db = firebase.firestore();
-      let passenger = db.collection("passenger");
-      let driver = db.collection("driver");
-      let company = db.collection("company");
-      this.verifyDbContent(passenger, email);
-      this.verifyDbContent(driver, email);
-      this.verifyDbContent(company, email);
-    });
-    return done;
-  }
 
   showLoadScreen=()=>{
     this.setState({
@@ -53,7 +30,7 @@ class Login extends React.Component{
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(()=>{
       this.setState({signedIn: true},()=>{
-        this.checkUserType(email);
+        router.push('/welcome');
       })
 
     })

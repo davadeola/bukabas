@@ -3,7 +3,7 @@ import React from 'react'
 import Layout from '../components/Layout'
 import MenuLayout from '../components/MenuLayout'
 import withAuth from '../lib/helpers/withAuth'
-import Map from '../components/Map'
+// import Map from '../components/Map'
 import {auth, firebase} from '../lib/firebase'
 import AddNewBus from '../components/addNewBus'
 import ViewBus from '../components/viewBus'
@@ -48,9 +48,9 @@ class Company extends React.Component{
       })
     }
   )
+}
 
 
-  }
 
   render(){
     const displayView=()=>{
