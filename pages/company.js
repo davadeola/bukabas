@@ -17,9 +17,16 @@ class Company extends React.Component{
     buses:[]
   }
 
+  componentDidMount(){
+    if(this.props.userType != 'company'){
+      alert("You are not allowed to view this page");
+      router.push("/")
+    }
+  }
+
   selectAddBus=()=>{
     this.setState({display:'addNew'});
-    console.log(this.props.userType);
+
   }
   selectViewBus=()=>{
     this.setState({display:'viewBus'},()=>{

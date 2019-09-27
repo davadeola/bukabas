@@ -6,6 +6,7 @@ import Layout from '../components/Layout'
 import withAuth from '../lib/helpers/withAuth';
 import MenuLayout from '../components/MenuLayout'
 import Trip from '../components/Trip'
+import router from 'next/router'
 
 
 class Driver extends React.Component{
@@ -23,6 +24,13 @@ class Driver extends React.Component{
   selectStartTrip=()=>{
     this.setState({display:'startTrip'});
     console.log(this.props.userType);
+  }
+
+  componentDidMount(){
+    if(this.props.userType != 'driver'){
+      alert("You are not allowed to view this page");
+      router.push("/")
+    }
   }
 
   render(){
