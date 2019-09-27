@@ -13,7 +13,8 @@ class Company extends React.Component{
   state={
     display:'',
     numplate:'',
-    busType:''
+    busType:'',
+    buses:[]
   }
 
   selectAddBus=()=>{
@@ -21,7 +22,9 @@ class Company extends React.Component{
     console.log(this.props.userType);
   }
   selectViewBus=()=>{
-    this.setState({display:'viewBus'});
+    this.setState({display:'viewBus'},()=>{
+      this.getAllBuses();
+    });
   }
 
   handleAddBus=(e)=>{
@@ -50,14 +53,31 @@ class Company extends React.Component{
   )
 }
 
+getAllBuses=()=>{
+  let db = firebase.firestore();
+  db.collection("bus").where('company', '==', this.props.userName).get().then(snapshot=>{
+    let data=[];
+    if(!snapshot.empty){
+      snapshot.forEach(doc => {
+        const d={
+          numplate : doc.id,
+          busType: doc.data().busType
+        }
 
+        data.push(d);
+      });
+      this.setState({buses: data});
+      console.log(this.state.buses);
+    }
+  })
+}
 
   render(){
     const displayView=()=>{
       if (this.state.display=='addNew') {
         return(<AddNewBus handleAddBus={this.handleAddBus}/>);
       } else if (this.state.display=='viewBus') {
-        return(<ViewBus/>);
+        return(<ViewBus data={this.state.buses}/>);
       } else {
         return(
           <div>

@@ -117,7 +117,7 @@ display: none !important;
   text-align: center;
 }
 
-.my-tab{
-  /* margin: .5em;
-  width: 25em; */
+.bus-card{
+  margin-top: 2.5%;
+  cursor: pointer;
 }
