@@ -11,24 +11,28 @@ const MenuLayout = (props) => (
   <div className="menu-layout">
     <div className="container-fluid">
       <div className="row">
-        <div className="col-sm-12">
+        <div className="col-md-12">
           <ProfileInfo/>
         </div>
       </div>
       <div className="row ">
-        <div className="d-flex flex-column">
+
 
           {
             props.userType=='company' &&
-            <div>
-              <button className="btn my-tab" onClick={props.selectAddBus}>Add New Bus</button>
-              <button className="btn my-tab" onClick={props.selectViewBus}>View my bus</button>
+            <div className="text-center col-md-12">
+              <div className="card menu-card" onClick={props.selectAddBus}>Add New Bus</div>
+              <div className="card menu-card" onClick={props.selectViewBus}>View my bus</div>
             </div>
             }
-          {props.userType=='driver' && <button className="btn my-tab" onClick={props.selectStartTrip}>Start a trip</button>}
+          {props.userType=='driver' &&
+              <div className="text-center col-md-12">
+            <div className="card menu-card" onClick={props.selectStartTrip}>Choose destination</div>
+            </div>
+          }
 
-          <button className="btn my-tab"></button>
-        </div>
+
+
       </div>
 
     </div>

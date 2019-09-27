@@ -105,6 +105,13 @@ display: none !important;
   padding: .5em;
 }
 
+.menu-card{
+  padding: .75em;
+  margin-bottom: 1.5em;
+  cursor: pointer;
+  color:  #22183c;
+}
+
 .my-landing .col-md-4{
   padding: 0;
 }
