@@ -31,7 +31,7 @@ const MenuLayout = (props) => (
               <div className="card menu-card" onClick={props.selectStartTrip}>Choose destination</div>
             </div>
           }
-          <div className="card menu-card">Edit profile</div>
+          <div className="card menu-card" onClick={props.selEditProfile}>Edit profile</div>
 
           </div>
 

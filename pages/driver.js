@@ -9,6 +9,7 @@ import MenuLayout from '../components/MenuLayout'
 import Trip from '../components/Trip'
 import SelectCompany from '../components/selectCompany'
 import router from 'next/router'
+import EditProfile from '../components/editProfile'
 
 
 class Driver extends React.Component{
@@ -16,7 +17,9 @@ class Driver extends React.Component{
     display:'',
     companies:[],
     compFullName:'',
-    busNumplate:''
+    busNumplate:'',
+    fullName: '',
+    phoneNum:''
   }
 
   selectDest=(e)=>{
@@ -33,6 +36,10 @@ class Driver extends React.Component{
   selectCompany=()=>{
     this.setState({display:'selectCompany'});
     this.getCompanyList();
+  }
+
+  selEditProfile=()=>{
+    this.setState({display:'editProfile'})
   }
 
   getCompanyList=()=>{
@@ -62,12 +69,36 @@ class Driver extends React.Component{
 
   handleSelectCompany=(e)=>{
     e.preventDefault();
-
+    let db = firebase.firestore();
     this.setState({
       compFullName: e.target.elements.comp.value,
       busNumplate: e.target.elements.bus.value
     }, ()=>{
-      console.log(this.state.busNumplate);
+      db.collection('driver').doc(this.props.userId).update({"busNumplate": this.state.busNumplate}).then(()=>{
+        alert("Updated your bus number plate");
+      })
+
+      db.collection('bus').doc(this.state.busNumplate).update({"driver": this.props.userName}).then(()=>{
+        alert("Updated bus information");
+      })
+
+    })
+  }
+
+  handleEditProfile=(e)=>{
+    e.preventDefault();
+    let db = firebase.firestore();
+    this.setState({
+      fullName: e.target.elements.fullName.value,
+      phoneNum: e.target.elements.phone.value
+    }, ()=>{
+      db.collection(this.props.userType).doc(this.props.userId).update(
+        {
+          fullName: this.state.fullName,
+          phone:this.state.phoneNum
+        }).then(()=>{
+        alert("Success");
+      })
     })
   }
 
@@ -80,7 +111,9 @@ class Driver extends React.Component{
         return(<ViewBus/>);
       } else if (this.state.display=='selectCompany') {
         return(<SelectCompany data={this.state.companies} handleSelectCompany={this.handleSelectCompany}/>);
-      } else {
+      }else if (this.state.display=='editProfile') {
+        return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
+      }  else {
         return(
           <div>
             <h1>Welcome to your Dashboard.</h1>
@@ -95,7 +128,7 @@ class Driver extends React.Component{
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3">
-                <MenuLayout display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany}/>
+                <MenuLayout selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany}/>
             </div>
             <div className="col-md-9">
               {displayView()}

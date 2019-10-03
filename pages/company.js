@@ -7,6 +7,7 @@ import withAuth from '../lib/helpers/withAuth'
 import {auth, firebase} from '../lib/firebase'
 import AddNewBus from '../components/addNewBus'
 import ViewBus from '../components/viewBus'
+import EditProfile from '../components/editProfile'
 
 
 class Company extends React.Component{
@@ -15,7 +16,9 @@ class Company extends React.Component{
     numplate:'',
     busType:'',
     buses:[],
-    userType:''
+    userType:'',
+    fullName: '',
+    phoneNum:''
   }
 
 // static getDerivedStateFromProps(nextProps, prevState) {
@@ -32,6 +35,10 @@ class Company extends React.Component{
     this.setState({display:'viewBus'},()=>{
       this.getAllBuses();
     });
+  }
+
+  selEditProfile=()=>{
+    this.setState({display:'editProfile'})
   }
 
   handleAddBus=(e)=>{
@@ -61,6 +68,23 @@ class Company extends React.Component{
   )
 }
 
+handleEditProfile=(e)=>{
+  e.preventDefault();
+  let db = firebase.firestore();
+  this.setState({
+    fullName: e.target.elements.fullName.value,
+    phoneNum: e.target.elements.phone.value
+  }, ()=>{
+    db.collection(this.props.userType).doc(this.props.userId).update(
+      {
+        fullName: this.state.fullName,
+        phone:this.state.phoneNum
+      }).then(()=>{
+      alert("Success");
+    })
+  })
+}
+
 getAllBuses=()=>{
   let db = firebase.firestore();
   db.collection("bus").where('company', '==', this.props.userName).get().then(snapshot=>{
@@ -69,7 +93,8 @@ getAllBuses=()=>{
       snapshot.forEach(doc => {
         const d={
           numplate : doc.id,
-          busType: doc.data().busType
+          busType: doc.data().busType,
+          driver: doc.data().driver
         }
 
         data.push(d);
@@ -93,6 +118,8 @@ getAllBuses=()=>{
         return(<AddNewBus handleAddBus={this.handleAddBus}/>);
       } else if (this.state.display=='viewBus') {
         return(<ViewBus data={this.state.buses}/>);
+      } else if (this.state.display=='editProfile') {
+        return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else {
         return(
           <div>
@@ -110,7 +137,7 @@ getAllBuses=()=>{
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-3">
-                  <MenuLayout display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} userType={this.props.userType}/>
+                  <MenuLayout display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} userType={this.props.userType}/>
               </div>
               <div className="col-md-9">
                 {displayView()}
