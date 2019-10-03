@@ -20,6 +20,17 @@ class Signup extends React.Component {
     showLoadScreen: false
   }
 
+  componentDidMount() {
+    auth.onAuthStateChanged(authUser => {
+
+      if (authUser) {
+        alert("Please sign out to register new account");
+        router.push('/');
+      }
+    });
+  }
+
+
   showLoadScreen = () => {
     this.setState({
       ...this.state,
@@ -62,7 +73,7 @@ class Signup extends React.Component {
               phone:this.state.phone,
               userType: this.state.userType
             }
-            // console.log(this.state.userHandle);
+
             db.collection(this.state.userType).doc(this.state.userHandle).set(userCredentials).then(()=>{
               alert("Successfully created");
               var newRoute = '/'.concat(this.state.userType);
