@@ -6,6 +6,7 @@ import Layout from '../components/Layout'
 import withAuth from '../lib/helpers/withAuth';
 import MenuLayout from '../components/MenuLayout'
 import Trip from '../components/Trip'
+import SelectCompany from '../components/selectCompany'
 import router from 'next/router'
 
 
@@ -26,11 +27,15 @@ class Driver extends React.Component{
     console.log(this.props.userType);
   }
 
+  selectCompany=()=>{
+    this.setState({display:'selectCompany'});
+  }
+
   componentDidMount(){
-    if(this.props.userType != 'driver'){
-      alert("You are not allowed to view this page");
-      router.push("/")
-    }
+    // if(this.props.userType != 'driver'){
+    //   alert("You are not allowed to view this page");
+    //   router.push("/")
+    // }
   }
 
   render(){
@@ -39,6 +44,8 @@ class Driver extends React.Component{
         return(<Trip selectDest={this.selectDest}/>);
       } else if (this.state.display=='viewBus') {
         return(<ViewBus/>);
+      } else if (this.state.display=='selectCompany') {
+        return(<SelectCompany/>);
       } else {
         return(
           <div>
@@ -54,7 +61,7 @@ class Driver extends React.Component{
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3">
-                <MenuLayout display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType}/>
+                <MenuLayout display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany}/>
             </div>
             <div className="col-md-9">
               {displayView()}

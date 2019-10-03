@@ -17,21 +17,23 @@ const MenuLayout = (props) => (
       </div>
       <div className="row ">
 
-
+        <div className="text-center col-md-12">
           {
             props.userType=='company' &&
-            <div className="text-center col-md-12">
+            <div>
               <div className="card menu-card" onClick={props.selectAddBus}>Add New Bus</div>
               <div className="card menu-card" onClick={props.selectViewBus}>View my bus</div>
             </div>
             }
           {props.userType=='driver' &&
-              <div className="text-center col-md-12">
-            <div className="card menu-card" onClick={props.selectStartTrip}>Choose destination</div>
+            <div>
+              <div className="card menu-card" onClick={props.selectCompany}>Select company</div>
+              <div className="card menu-card" onClick={props.selectStartTrip}>Choose destination</div>
             </div>
           }
+          <div className="card menu-card">Edit profile</div>
 
-
+          </div>
 
       </div>
 

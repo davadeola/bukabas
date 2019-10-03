@@ -103,6 +103,7 @@ display: none !important;
   background-color: #58e1e1;
   height: 30rem;
   padding: .5em;
+
 }
 
 .menu-card{
@@ -127,4 +128,13 @@ display: none !important;
 .bus-card{
   margin-top: 2.5%;
   cursor: pointer;
+}
+
+.dash-btn{
+  float: right;
+}
+
+.navbar{
+  width: 100%;
+  justify-content: flex-end;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import router from 'next/router';
 import Layout from '../components/Layout'
 import MenuLayout from '../components/MenuLayout'
 import withAuth from '../lib/helpers/withAuth'
@@ -14,15 +14,15 @@ class Company extends React.Component{
     display:'',
     numplate:'',
     busType:'',
-    buses:[]
+    buses:[],
+    userType:''
   }
 
-  componentDidMount(){
-    if(this.props.userType != 'company'){
-      alert("You are not allowed to view this page");
-      router.push("/")
-    }
-  }
+// static getDerivedStateFromProps(nextProps, prevState) {
+//   return{
+//     userType: nextProps.userType
+//   }
+// }
 
   selectAddBus=()=>{
     this.setState({display:'addNew'});
@@ -37,6 +37,7 @@ class Company extends React.Component{
   handleAddBus=(e)=>{
     e.preventDefault();
     const userType = this.props.userType;
+
     this.setState({
       numplate: e.target.elements.numplate.value,
       busType: e.target.elements.busType.value
@@ -80,6 +81,13 @@ getAllBuses=()=>{
 }
 
   render(){
+    // if(this.props.userType != 'company'){
+    //   alert("You are not allowed to view this page");
+    //   router.push("/")
+    // }
+
+
+
     const displayView=()=>{
       if (this.state.display=='addNew') {
         return(<AddNewBus handleAddBus={this.handleAddBus}/>);
@@ -96,7 +104,9 @@ getAllBuses=()=>{
       }
     }
     return(
+
         <Layout>
+          {}
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-3">
