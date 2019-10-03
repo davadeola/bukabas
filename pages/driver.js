@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Nav from '../components/nav'
 import Layout from '../components/Layout'
 import withAuth from '../lib/helpers/withAuth';
+import {auth, firebase} from '../lib/firebase'
 import MenuLayout from '../components/MenuLayout'
 import Trip from '../components/Trip'
 import SelectCompany from '../components/selectCompany'
@@ -13,7 +14,7 @@ import router from 'next/router'
 class Driver extends React.Component{
   state={
     display:'',
-
+    companies:[]
   }
 
   selectDest=(e)=>{
@@ -29,13 +30,31 @@ class Driver extends React.Component{
 
   selectCompany=()=>{
     this.setState({display:'selectCompany'});
+    this.getCompanyList();
   }
 
-  componentDidMount(){
-    // if(this.props.userType != 'driver'){
-    //   alert("You are not allowed to view this page");
-    //   router.push("/")
-    // }
+  getCompanyList=()=>{
+    let db= firebase.firestore();
+    db.collection("company").get().then(snapshot=>{
+      let data=[];
+      if(!snapshot.empty){
+        snapshot.forEach(doc=>{
+          const d={
+            email: doc.data().email,
+            fullName: doc.data().fullName,
+            companyId: doc.id
+          }
+
+          data.push(d);
+        })
+
+      }
+      this.setState({companies: data});
+      console.log(this.state.companies);
+    }).catch(err=>{
+      console.log(err);
+    });
+
   }
 
   render(){
@@ -45,7 +64,7 @@ class Driver extends React.Component{
       } else if (this.state.display=='viewBus') {
         return(<ViewBus/>);
       } else if (this.state.display=='selectCompany') {
-        return(<SelectCompany/>);
+        return(<SelectCompany data={this.state.companies}/>);
       } else {
         return(
           <div>
