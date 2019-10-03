@@ -68,6 +68,9 @@ class Signup extends React.Component {
               var newRoute = '/'.concat(this.state.userType);
               router.push(newRoute);
             })
+          }).catch((err)=>{
+            alert(err.message+" Please try again");
+            location.reload(false);
           })
         }
       });
