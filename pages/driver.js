@@ -14,7 +14,9 @@ import router from 'next/router'
 class Driver extends React.Component{
   state={
     display:'',
-    companies:[]
+    companies:[],
+    compFullName:'',
+    busNumplate:''
   }
 
   selectDest=(e)=>{
@@ -50,12 +52,25 @@ class Driver extends React.Component{
 
       }
       this.setState({companies: data});
-      console.log(this.state.companies);
+
     }).catch(err=>{
       console.log(err);
     });
 
   }
+
+
+  handleSelectCompany=(e)=>{
+    e.preventDefault();
+
+    this.setState({
+      compFullName: e.target.elements.comp.value,
+      busNumplate: e.target.elements.bus.value
+    }, ()=>{
+      console.log(this.state.busNumplate);
+    })
+  }
+
 
   render(){
     const displayView=()=>{
@@ -64,7 +79,7 @@ class Driver extends React.Component{
       } else if (this.state.display=='viewBus') {
         return(<ViewBus/>);
       } else if (this.state.display=='selectCompany') {
-        return(<SelectCompany data={this.state.companies}/>);
+        return(<SelectCompany data={this.state.companies} handleSelectCompany={this.handleSelectCompany}/>);
       } else {
         return(
           <div>

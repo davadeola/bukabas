@@ -138,3 +138,7 @@ display: none !important;
   width: 100%;
   justify-content: flex-end;
 }
+
+select{
+  margin-bottom: 5em;
+}

@@ -27,7 +27,7 @@ const MenuLayout = (props) => (
             }
           {props.userType=='driver' &&
             <div>
-              <div className="card menu-card" onClick={props.selectCompany}>Select company</div>
+              <div className="card menu-card" onClick={props.selectCompany}>Select your bus</div>
               <div className="card menu-card" onClick={props.selectStartTrip}>Choose destination</div>
             </div>
           }
