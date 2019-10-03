@@ -53,10 +53,10 @@ a:hover{
 }
 
 form.login-form {
-  padding-left: 15em;
-  padding-right: 15em;
+  /* padding-left: 15em;
+  padding-right: 15em; */
   display: block;
-  margin: 0 auto;
+  margin: 0 15% 0 15%;
   text-align: center;
 }
 

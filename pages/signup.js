@@ -4,9 +4,7 @@ import Head from 'next/head'
 import Nav from '../components/nav'
 import Layout from '../components/Layout'
 import Signupselect from '../components/signupselect'
-import Passform from '../components/passform'
-import Drivform from '../components/drivform'
-import Compform from '../components/compform'
+import SignUpform from '../components/signUpForm'
 import router from 'next/router'
 import Loadscreen from '../components/loadingScreen'
 import {auth, firebase} from '../lib/firebase'
@@ -87,13 +85,9 @@ class Signup extends React.Component {
 
   render() {
     const RenderContent = () => {
-      if (this.state.userType == "passenger") {
-        return <Passform handleSignUp={this.handleSignUp} backToSelect={this.backToSelect}/>
-      } else if (this.state.userType == "driver") {
-        return <Drivform handleSignUp={this.handleSignUp} backToSelect={this.backToSelect}/>
-      } else if (this.state.userType == "company") {
-        return <Compform handleSignUp={this.handleSignUp}/>
-      } else {
+      if (this.state.userType) {
+        return <SignUpform handleSignUp={this.handleSignUp} backToSelect={this.backToSelect}/>
+    }  else {
         return <Signupselect handleSelect={this.handleSelect}/>
       }
     }

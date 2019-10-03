@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Nav from '../components/nav'
 import Layout from '../components/Layout'
 
-const Compform=(props)=>(
+const SignUpform=(props)=>(
 
       <div className="container ">
         <h1 className="text-center">Create a company account</h1>
@@ -30,7 +30,7 @@ const Compform=(props)=>(
                 <input name="conpassword" type="password" placeholder="Confirm your password" className="form-control"/>
               </div>
             </div>
-          
+
 
           </div>
 
@@ -42,4 +42,4 @@ const Compform=(props)=>(
         </form>
       </div>
     );
-export default Compform
+export default SignUpform
