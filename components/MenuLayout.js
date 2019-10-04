@@ -12,7 +12,7 @@ const MenuLayout = (props) => (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-12">
-          <ProfileInfo/>
+          <ProfileInfo userName={props.userName}/>
         </div>
       </div>
       <div className="row ">
@@ -33,7 +33,7 @@ const MenuLayout = (props) => (
           }
           {props.userType=='passenger' &&
             <div>
-              
+
               <div className="card menu-card" onClick={props.selectStartTrip}>Choose destination</div>
             </div>
           }

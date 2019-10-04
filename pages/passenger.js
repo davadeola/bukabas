@@ -6,7 +6,7 @@ import EditProfile from '../components/editProfile'
 import Trip from '../components/Trip'
 import {auth, firebase} from '../lib/firebase'
 
-//import Map from '../components/Map'
+import Map from '../components/Map'
 
 
 class Passenger extends React.Component{
@@ -40,8 +40,13 @@ class Passenger extends React.Component{
           phone:this.state.phoneNum
         }).then(()=>{
         alert("Success");
+
       })
-    })
+    }
+
+  )
+    e.target.elements.fullName.value="";
+    e.target.elements.phone.value="";
   }
 
     render(){
@@ -68,11 +73,14 @@ class Passenger extends React.Component{
             <div className="container-fluid">
               <div className="row">
                 <div className="col-md-3">
-                    <MenuLayout selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip}  userType={this.props.userType} />
+                    <MenuLayout userName={this.props.userName} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip}  userType={this.props.userType} />
                 </div>
                 <div className="col-md-9">
                   {displayView()}
                 </div>
+              </div>
+              <div>
+                <Map/>
               </div>
 
             </div>

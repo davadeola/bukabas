@@ -137,7 +137,7 @@ getAllBuses=()=>{
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-3">
-                  <MenuLayout display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} userType={this.props.userType}/>
+                  <MenuLayout userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} userType={this.props.userType}/>
               </div>
               <div className="col-md-9">
                 {displayView()}

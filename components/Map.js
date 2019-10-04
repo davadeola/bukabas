@@ -1,7 +1,10 @@
 import React,{ useState } from 'react'
 import ReactMapGL, {GeolocateControl , NavigationControl, Marker} from 'react-map-gl'
+import axios from 'axios';
+import Pusher from 'pusher-js';
+import { ToastContainer, toast } from 'react-toastify'
 
-import 'mapbox-gl/dist/mapbox-gl.css'
+
 
 const TOKEN=process.env.REACT_APP_TOKEN;
 
@@ -11,10 +14,11 @@ class Map extends React.Component{
       viewport: {
         width: "100%",
         height: "75vh",
-        latitude: 37.7577,
-        longitude: -122.4376,
+        latitude: -1.28333 ,
+        longitude: 36.81667,
         zoom: 8
-      }
+      },
+
     };
 render(){
   const { viewport } = this.state;

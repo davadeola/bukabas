@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import About from '../components/About'
+import {auth, firebase} from '../lib/firebase'
 
 const Home=()=>(
     <Layout>
@@ -11,7 +12,14 @@ const Home=()=>(
             <div className="col-md-4">  <h1 className="display-4">Transforming public transport</h1>
               <div className='btn-row'>
 
-                <Link href='/signup'>
+                <Link href='/signup' onClick={()=>{
+                  auth.onAuthStateChanged(authUser => {
+                    if (authUser) {
+                      alert("Please sign out to register new account");
+                      router.push('/');
+                    }
+                  });
+                }}>
                   <a title='Login page'><button className="btn">Get started today</button></a>
                 </Link>
               </div></div>

@@ -21,12 +21,7 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
-    auth.onAuthStateChanged(authUser => {
-      if (authUser) {
-        alert("Please sign out to register new account");
-        router.push('/');
-      }
-    });
+  
   }
 
 

@@ -36,10 +36,22 @@ const Trip=(props)=>(
 
       <div className="form-group row">
         <div className="col-md-12">
-          <button type="submit" className="btn-success btn">Start trip</button>
+
+          {props.startedTrip==false && <button type="submit" className="btn-success btn">Start trip</button>}
+
+
         </div>
       </div>
     </form>
+
+
+    <div className="row">
+      <div className="col-md-12">
+        {props.startedTrip && <button className="btn-warning btn" onClick={props.stopTracking}>Stop trip</button>}
+
+      </div>
+    </div>
+
   </div>
 
 )

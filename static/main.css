@@ -142,3 +142,13 @@ display: none !important;
 select{
   margin-bottom: 5em;
 }
+
+
+.account-img{
+  width: 40%;
+}
+
+
+.account-tab h1{
+  color: white;
+}
