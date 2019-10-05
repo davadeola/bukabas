@@ -21,15 +21,42 @@ class Driver extends React.Component {
     phoneNum: '',
     startedTrip: false,
     currLocation: {},
-    geoId: ''
+    geoId: '',
+    destination:''
 
   }
 
   selectDest = (e) => {
     e.preventDefault();
     const destination = e.target.elements.dest.value;
-    console.log(destination);
-    this.getLocation();
+    let db = firebase.firestore();
+    this.setState({startedTrip: true}, ()=>{
+      if (navigator.geolocation && this.state.startedTrip) {
+        let GeoId = navigator.geolocation.watchPosition(position => {
+          let location = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          this.setState({geoId: GeoId, currLocation: location},()=>{
+            db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination}).then(() => {
+              console.log(this.state.currLocation +"Updated your bus number plate");
+            })
+          });
+
+        }, (err) => {
+          console.warn('ERROR(' + err.code + '): ' + err.message);
+        },{
+          enableHighAccuracy: false,
+          timeout: 1000,
+          maximumAge: 0
+        })
+
+      } else {
+        alert("Geolocation is not supported in your browser");
+      }
+    });
+
+
   }
 
   stopTracking = () => {
@@ -38,30 +65,7 @@ class Driver extends React.Component {
     console.log("STopped tracking");
   }
 
-  getLocation = () => {
-    this.setState({startedTrip: true});
-    if (navigator.geolocation) {
-      let GeoId = navigator.geolocation.watchPosition(position => {
-        let location = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        this.setState({geoId: GeoId, currLocation: location},()=>{
-          console.log(this.state.currLocation);
-        });
 
-      }, (err) => {
-        console.warn('ERROR(' + err.code + '): ' + err.message);
-      }, {
-        enableHighAccuracy: false,
-        timeout: 1000,
-        maximumAge: 0
-      })
-
-    } else {
-      alert("Geolocation is not supported in your browser");
-    }
-  }
 
   selectStartTrip = () => {
     this.setState({display: 'startTrip'});
@@ -107,13 +111,24 @@ class Driver extends React.Component {
       compFullName: e.target.elements.comp.value,
       busNumplate: e.target.elements.bus.value
     }, () => {
-      db.collection('driver').doc(this.props.userId).update({"busNumplate": this.state.busNumplate}).then(() => {
+      db.collection('driver').doc(this.props.userId).update({"busNumplate": this.state.busNumplate, "compFullName": this.state.compFullName}).then(() => {
         alert("Updated your bus number plate");
       })
 
-      db.collection('bus').doc(this.state.busNumplate).update({"driver": this.props.userName}).then(() => {
-        alert("Updated bus information");
+
+      db.collection("bus").where('driverId', '==', this.props.userId).get().then(snapshot=>{
+        if (!snapshot.empty) {
+          snapshot.forEach(doc=>{
+            db.collection('bus').doc(doc.id).update({"driver": '', "driverId": ''})
+          })
+        }
+      }).then(()=>{
+        db.collection('bus').doc(this.state.busNumplate).update({"driver": this.props.userName, "driverId": this.props.userId}).then(() => {
+          alert("Updated bus information");
+        })
       })
+
+
 
     })
   }

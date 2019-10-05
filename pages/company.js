@@ -21,11 +21,6 @@ class Company extends React.Component{
     phoneNum:''
   }
 
-// static getDerivedStateFromProps(nextProps, prevState) {
-//   return{
-//     userType: nextProps.userType
-//   }
-// }
 
   selectAddBus=()=>{
     this.setState({display:'addNew'});
@@ -94,16 +89,23 @@ getAllBuses=()=>{
         const d={
           numplate : doc.id,
           busType: doc.data().busType,
-          driver: doc.data().driver
+          driver: doc.data().driver,
+          driverId: doc.data().driverId
         }
 
         data.push(d);
       });
       this.setState({buses: data});
-      console.log(this.state.buses);
     }
   })
 }
+
+
+getCoord=(e)=>{
+  let db = firebase.firestore();
+  console.log(e);
+}
+
 
   render(){
     // if(this.props.userType != 'company'){
@@ -117,7 +119,7 @@ getAllBuses=()=>{
       if (this.state.display=='addNew') {
         return(<AddNewBus handleAddBus={this.handleAddBus}/>);
       } else if (this.state.display=='viewBus') {
-        return(<ViewBus data={this.state.buses}/>);
+        return(<ViewBus data={this.state.buses} getCoord={this.getCoord}/>);
       } else if (this.state.display=='editProfile') {
         return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else {
@@ -133,7 +135,7 @@ getAllBuses=()=>{
     return(
 
         <Layout>
-          {}
+
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-3">
