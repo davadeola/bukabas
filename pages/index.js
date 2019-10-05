@@ -12,15 +12,15 @@ const Home=()=>(
             <div className="col-md-4">  <h1 className="display-4">Transforming public transport</h1>
               <div className='btn-row'>
 
-                <Link href='/signup' onClick={()=>{
-                  auth.onAuthStateChanged(authUser => {
-                    if (authUser) {
-                      alert("Please sign out to register new account");
-                      router.push('/');
-                    }
-                  });
-                }}>
-                  <a title='Login page'><button className="btn">Get started today</button></a>
+                <Link href='/signup'>
+                  <a title='Sign up page'><button className="btn" onClick={()=>{
+                    auth.onAuthStateChanged(authUser => {
+                      if (authUser) {
+                        alert("Please sign out to register new account");
+                        location.reload(false);
+                      }
+                    });
+                  }}>Get started today</button></a>
                 </Link>
               </div></div>
             <div className="col-md-4">  <img src="/static/images/lady.png" id="lady" className="home-img"/></div>

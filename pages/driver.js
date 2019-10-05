@@ -109,24 +109,16 @@ class Driver extends React.Component {
     let db = firebase.firestore();
     this.setState({
       compFullName: e.target.elements.comp.value,
-      busNumplate: e.target.elements.bus.value
+
     }, () => {
-      db.collection('driver').doc(this.props.userId).update({"busNumplate": this.state.busNumplate, "compFullName": this.state.compFullName}).then(() => {
-        alert("Updated your bus number plate");
-      })
 
 
-      db.collection("bus").where('driverId', '==', this.props.userId).get().then(snapshot=>{
-        if (!snapshot.empty) {
-          snapshot.forEach(doc=>{
-            db.collection('bus').doc(doc.id).update({"driver": '', "driverId": ''})
-          })
-        }
-      }).then(()=>{
-        db.collection('bus').doc(this.state.busNumplate).update({"driver": this.props.userName, "driverId": this.props.userId}).then(() => {
+
+
+        db.collection('driver').doc(this.props.userId).update({"compFullName": this.state.compFullName}).then(() => {
           alert("Updated bus information");
         })
-      })
+
 
 
 

@@ -18,13 +18,16 @@ class Company extends React.Component{
     buses:[],
     userType:'',
     fullName: '',
-    phoneNum:''
+    phoneNum:'',
+    drivers:[]
   }
+
+
 
 
   selectAddBus=()=>{
     this.setState({display:'addNew'});
-
+    this.getDriverList();
   }
   selectViewBus=()=>{
     this.setState({display:'viewBus'},()=>{
@@ -36,24 +39,59 @@ class Company extends React.Component{
     this.setState({display:'editProfile'})
   }
 
+  getDriverList = () => {
+    let db = firebase.firestore();
+    db.collection("driver").where("compFullName", "==", this.props.userId).onSnapshot(snapshot => {
+      let data = [];
+      if (!snapshot.empty) {
+        snapshot.forEach(doc => {
+          const d = {
+            email: doc.data().email,
+            fullName: doc.data().fullName,
+            driverId: doc.id,
+            location: doc.data().location,
+            busNumplate: doc.data().busNumplate,
+            phone: doc.data().phone,
+            destination: doc.data().destination
+          }
+
+          data.push(d);
+        })
+
+      }
+      this.setState({drivers: data});
+
+    })
+
+  }
+
+
   handleAddBus=(e)=>{
     e.preventDefault();
     const userType = this.props.userType;
 
     this.setState({
       numplate: e.target.elements.numplate.value,
-      busType: e.target.elements.busType.value
+      busType: e.target.elements.busType.value,
+      driver: e.target.elements.driver.value
     },()=>{
       let db = firebase.firestore();
       db.collection("bus").doc(this.state.numplate).get()
       .then(doc=>{
         if (doc.exists) {
-          alert("This username already exists");
+          alert("This number plate already exists");
         }else{
           let busCrendentials={
             busType: this.state.busType,
-            company: this.props.userName
+            company: this.props.userName,
+            driver: this.state.driver,
+            companyId: this.props.userId
           }
+
+          db.collection('driver').doc(this.state.driver).update({"busNumplate": this.state.numplate}).then(() => {
+            alert("Updated your bus number plate");
+          });
+
           db.collection("bus").doc(this.state.numplate).set(busCrendentials).then(()=>{
              alert("Successfully add a a new bus");
           })
@@ -74,15 +112,23 @@ handleEditProfile=(e)=>{
       {
         fullName: this.state.fullName,
         phone:this.state.phoneNum
+      })
+      db.collection('bus').where("companyId","==", this.props.userId).get().then(snapshot=>{
+        if(!snapshot.empty){
+            snapshot.forEach(doc => {
+                db.collection('bus').doc(doc.id).update({company: this.state.fullName})
+            })
+        }
       }).then(()=>{
       alert("Success");
     })
+
   })
 }
 
 getAllBuses=()=>{
   let db = firebase.firestore();
-  db.collection("bus").where('company', '==', this.props.userName).get().then(snapshot=>{
+  db.collection("bus").where('companyId', '==', this.props.userId).get().then(snapshot=>{
     let data=[];
     if(!snapshot.empty){
       snapshot.forEach(doc => {
@@ -117,7 +163,7 @@ getCoord=(e)=>{
 
     const displayView=()=>{
       if (this.state.display=='addNew') {
-        return(<AddNewBus handleAddBus={this.handleAddBus}/>);
+        return(<AddNewBus handleAddBus={this.handleAddBus} drivers={this.state.drivers}/>);
       } else if (this.state.display=='viewBus') {
         return(<ViewBus data={this.state.buses} getCoord={this.getCoord}/>);
       } else if (this.state.display=='editProfile') {
