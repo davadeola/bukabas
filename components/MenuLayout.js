@@ -23,6 +23,7 @@ const MenuLayout = (props) => (
             <div>
               <div className="card menu-card" onClick={props.selectAddBus}>Add New Bus</div>
               <div className="card menu-card" onClick={props.selectViewBus}>View my bus</div>
+              <div className="card menu-card">Assign a driver</div>
             </div>
             }
           {props.userType=='driver' &&

@@ -19,7 +19,8 @@ class Company extends React.Component{
     userType:'',
     fullName: '',
     phoneNum:'',
-    drivers:[]
+    drivers:[],
+    driverLocation:{}
   }
 
 
@@ -136,7 +137,7 @@ getAllBuses=()=>{
           numplate : doc.id,
           busType: doc.data().busType,
           driver: doc.data().driver,
-          driverId: doc.data().driverId
+
         }
 
         data.push(d);
@@ -147,9 +148,16 @@ getAllBuses=()=>{
 }
 
 
-getCoord=(e)=>{
+getCoord=(driverId)=>{
   let db = firebase.firestore();
-  console.log(e);
+  db.collection('driver').doc(driverId).onSnapshot(doc=>{
+    if (doc.exists) {
+      this.setState({driverLocation: doc.data().location},()=>{
+        console.log(this.state.driverLocation);
+      })
+    }
+  })
+
 }
 
 

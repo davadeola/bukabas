@@ -8,7 +8,7 @@ class ViewBus extends React.Component{
       <div className="container">
         <h1>Click to view your buses</h1>
         <div className="row">
-          {this.props.data.map(bus=><BusCard key={bus.numplate} numplate={bus.numplate} busType={bus.busType} driver={bus.driver} driverId={bus.driverId} getCoord={this.props.getCoord} />)}
+          {this.props.data.map(bus=><BusCard key={bus.numplate} numplate={bus.numplate} busType={bus.busType} driver={bus.driver}  getCoord={this.props.getCoord} />)}
 
         </div>
 
