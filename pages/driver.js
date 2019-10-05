@@ -23,11 +23,33 @@ class Driver extends React.Component {
     currLocation: {},
     geoId: '',
     destination:''
+  }
+
+
+
+  getPreviousLoc=()=>{
+    let db = firebase.firestore();
+    let drivAccount = db.collection('driver').doc(this.props.userId).get().then(doc=>{
+      if (doc.exists) {
+
+          this.setState({
+            startedTrip: doc.data().startedTrip,
+            geoId: doc.data().geoId,
+            destination: doc.data().destination,
+            currLocation:doc.data().currLocation
+          })
+      }
+    }).catch(err=>{
+      console.log(err.message);
+    })
+
 
   }
 
   selectDest = (e) => {
+
     e.preventDefault();
+
     const destination = e.target.elements.dest.value;
     let db = firebase.firestore();
     this.setState({startedTrip: true}, ()=>{
@@ -38,7 +60,7 @@ class Driver extends React.Component {
             lng: position.coords.longitude
           };
           this.setState({geoId: GeoId, currLocation: location},()=>{
-            db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination}).then(() => {
+            db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip}).then(() => {
               console.log(this.state.currLocation +"Updated your bus number plate");
             })
           });
@@ -60,8 +82,13 @@ class Driver extends React.Component {
   }
 
   stopTracking = () => {
+    let db = firebase.firestore();
     this.setState({startedTrip: false});
+
     navigator.geolocation.clearWatch(this.state.geoId);
+    db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
+      alert("You have ended your trip");
+    })
     console.log("STopped tracking");
   }
 
@@ -69,6 +96,7 @@ class Driver extends React.Component {
 
   selectStartTrip = () => {
     this.setState({display: 'startTrip'});
+    this.getPreviousLoc();
   }
 
   selectCompany = () => {
@@ -111,17 +139,9 @@ class Driver extends React.Component {
       compFullName: e.target.elements.comp.value,
 
     }, () => {
-
-
-
-
         db.collection('driver').doc(this.props.userId).update({"compFullName": this.state.compFullName}).then(() => {
-          alert("Updated bus information");
+          alert("Successfully changed your company");
         })
-
-
-
-
     })
   }
 
@@ -133,7 +153,7 @@ class Driver extends React.Component {
       phoneNum: e.target.elements.phone.value
     }, () => {
       db.collection(this.props.userType).doc(this.props.userId).update({fullName: this.state.fullName, phone: this.state.phoneNum}).then(() => {
-        alert("Success");
+        alert("Success. Profile Edited");
       })
     })
   }
