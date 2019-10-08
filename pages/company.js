@@ -3,7 +3,7 @@ import router from 'next/router';
 import Layout from '../components/Layout'
 import MenuLayout from '../components/MenuLayout'
 import withAuth from '../lib/helpers/withAuth'
-// import Map from '../components/Map'
+import Map from '../components/Map'
 import {auth, firebase} from '../lib/firebase'
 import AddNewBus from '../components/addNewBus'
 import ViewBus from '../components/viewBus'
@@ -152,7 +152,7 @@ getCoord=(driverId)=>{
   let db = firebase.firestore();
   db.collection('driver').doc(driverId).onSnapshot(doc=>{
     if (doc.exists) {
-      this.setState({driverLocation: doc.data().location},()=>{
+      this.setState({driverLocation: doc.data().location, display: 'map'},()=>{
         console.log(this.state.driverLocation);
       })
     }
@@ -176,6 +176,8 @@ getCoord=(driverId)=>{
         return(<ViewBus data={this.state.buses} getCoord={this.getCoord}/>);
       } else if (this.state.display=='editProfile') {
         return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
+      } else if (this.state.display=='map') {
+        return(<Map driverLocation={this.state.driverLocation}/>);
       } else {
         return(
           <div>
