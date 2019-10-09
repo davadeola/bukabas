@@ -8,6 +8,7 @@ import {auth, firebase} from '../lib/firebase'
 import AddNewBus from '../components/addNewBus'
 import ViewBus from '../components/viewBus'
 import EditProfile from '../components/editProfile'
+import AssignDriver from '../components/assignDriver'
 
 
 class Company extends React.Component{
@@ -39,6 +40,12 @@ class Company extends React.Component{
   selEditProfile=()=>{
     this.setState({display:'editProfile'})
   }
+
+selAssignDriver=()=>{
+  this.setState({display: 'assignDriver'});
+  this.getAllBuses();
+  this.getDriverList();
+}
 
   getDriverList = () => {
     let db = firebase.firestore();
@@ -93,9 +100,20 @@ class Company extends React.Component{
             alert("Updated your bus number plate");
           });
 
-          db.collection("bus").doc(this.state.numplate).set(busCrendentials).then(()=>{
-             alert("Successfully add a a new bus");
-          })
+
+          db.collection("bus").where('driverId', '==', this.state.driver).get().then(snapshot=>{
+                 if (!snapshot.empty) {
+                   snapshot.forEach(doc=>{
+                     db.collection('bus').doc(doc.id).update({"driver": '', "driverId": ''})
+                   })
+                 }
+               }).then(()=>{
+                 db.collection("bus").doc(this.state.numplate).set(busCrendentials).then(()=>{
+                    alert("Successfully add a a new bus");
+                 })
+               })
+
+
         }
       })
     }
@@ -148,6 +166,36 @@ getAllBuses=()=>{
 }
 
 
+handleAssignDriver=(e)=>{
+  let db = firebase.firestore();
+  e.preventDefault();
+  const driver=e.target.elements.driver.value;
+  const numplate = e.target.elements.bus.value;
+
+
+
+  db.collection('driver').doc(driver).update({"busNumplate": numplate}).then(() => {
+    alert("Updated your bus number plate");
+  });
+
+  db.collection("bus").where('driver', '==', driver).get().then(snapshot=>{
+         if (!snapshot.empty) {
+           snapshot.forEach(doc=>{
+             db.collection('bus').doc(doc.id).update({"driver": ''})
+           })
+         }
+       }).then(()=>{
+         db.collection('bus').doc(numplate).update({"driver": driver}).then(() => {
+           alert("Updated bus information");
+         })
+       })
+
+}
+
+
+
+
+
 getCoord=(driverId)=>{
   let db = firebase.firestore();
   db.collection('driver').doc(driverId).onSnapshot(doc=>{
@@ -178,6 +226,8 @@ getCoord=(driverId)=>{
         return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else if (this.state.display=='map') {
         return(<Map driverLocation={this.state.driverLocation}/>);
+      } else if (this.state.display=='assignDriver') {
+        return(<AssignDriver drivers={this.state.drivers} buses={this.state.buses} handleAssignDriver={this.handleAssignDriver}/>);
       } else {
         return(
           <div>
@@ -195,7 +245,7 @@ getCoord=(driverId)=>{
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-3">
-                  <MenuLayout userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} userType={this.props.userType}/>
+                  <MenuLayout userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} selAssignDriver={this.selAssignDriver} userType={this.props.userType} />
               </div>
               <div className="col-md-9">
                 {displayView()}

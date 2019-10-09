@@ -6,7 +6,7 @@ import EditProfile from '../components/editProfile'
 import Trip from '../components/Trip'
 import {auth, firebase} from '../lib/firebase'
 
-import Map from '../components/Map'
+//import Map from '../components/Map'
 
 
 class Passenger extends React.Component{
@@ -80,7 +80,7 @@ class Passenger extends React.Component{
                 </div>
               </div>
               <div>
-                <Map/>
+                 
               </div>
 
             </div>

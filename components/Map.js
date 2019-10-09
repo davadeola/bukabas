@@ -14,7 +14,7 @@ class Map extends React.Component{
       viewport: {
         width: "100%",
         height: "75vh",
-        zoom: 12
+        zoom: 14
       },
 
     };
@@ -27,7 +27,7 @@ render(){
          <img className="marker" src="/static/images/bus-marker.png"/>
        </Marker>
        <div style={{position: 'absolute', right: 0}}>
-         <NavigationControl captureClick={false}/>
+         <NavigationControl captureClick={true}/>
        </div>
      </ReactMapGL>
      </div>

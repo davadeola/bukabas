@@ -61,7 +61,7 @@ class Driver extends React.Component {
           };
           this.setState({geoId: GeoId, currLocation: location},()=>{
             db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip}).then(() => {
-              console.log(this.state.currLocation +"Updated your bus number plate");
+              console.log(this.state.currLocation +". Updated your location");
             })
           });
 
