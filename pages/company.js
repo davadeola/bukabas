@@ -74,7 +74,7 @@ selAssignDriver=()=>{
   }
 
 
-  handleAddBus=(e)=>{
+handleAddBus=(e)=>{
     e.preventDefault();
     const userType = this.props.userType;
 
@@ -116,9 +116,8 @@ selAssignDriver=()=>{
 
         }
       })
-    }
-  )
-}
+    })
+  }
 
 handleEditProfile=(e)=>{
   e.preventDefault();
@@ -233,7 +232,6 @@ getCoord=(driverId)=>{
           <div>
             <h1>Welcome to your Dashboard.</h1>
             <h4>Select an option to begin exploring as a {this.props.userType}</h4>
-
           </div>
         )
       }

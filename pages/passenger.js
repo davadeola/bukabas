@@ -14,16 +14,88 @@ class Passenger extends React.Component{
   state={
     display:'',
     fullName: '',
-    phoneNum:''
+    phoneNum:'',
+    movingBuses:[],
+    myBuses:[],
+    currLocation:{},
+    geoId:''
   }
 
   selectStartTrip=()=>{
     this.setState({display:'startTrip'});
     console.log(this.props.userType);
+    this.getAllMovingBuses();
   }
 
   selEditProfile=()=>{
     this.setState({display:'editProfile'})
+  }
+
+  getAllMovingBuses=()=>{
+    let db = firebase.firestore();
+    db.collection("driver").where("startedTrip", "==", true).onSnapshot(snapshot => {
+      let data = [];
+      if (!snapshot.empty) {
+        snapshot.forEach(doc => {
+          const d = {
+            email: doc.data().email,
+            fullName: doc.data().fullName,
+            driverId: doc.id,
+            compId: doc.data().compFullName,
+            location: doc.data().location,
+            busNumplate: doc.data().busNumplate,
+            phone: doc.data().phone,
+            destination: doc.data().destination
+          }
+
+          data.push(d);
+        })
+
+      }
+      this.setState({movingBuses: data});
+
+    })
+
+  }
+
+  selectDest=(e)=>{
+    e.preventDefault();
+    let db = firebase.firestore();
+    let myDest = e.target.elements.dest.value;
+    let myBuses = this.state.movingBuses.filter((bus)=>{
+      return bus.destination == myDest;
+    })
+    this.setState({myBuses: myBuses});
+
+
+    if (navigator.geolocation) {
+      let GeoId = navigator.geolocation.watchPosition(position => {
+        let location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        this.setState({geoId: GeoId, currLocation: location},()=>{
+          db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination":myDest, "geoId": this.state.geoId}).then(() => {
+            console.log(this.state.currLocation +". Updated your location");
+          })
+        });
+
+      }, (err) => {
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+      },{
+        enableHighAccuracy: false,
+        timeout: 1000,
+        maximumAge: 0
+      })
+
+    } else {
+      alert("Geolocation is not supported in your browser");
+    }
+  }
+
+
+  getPassLocation=()=>{
+
   }
 
 
@@ -42,9 +114,7 @@ class Passenger extends React.Component{
         alert("Success");
 
       })
-    }
-
-  )
+    })
     e.target.elements.fullName.value="";
     e.target.elements.phone.value="";
   }
@@ -53,7 +123,7 @@ class Passenger extends React.Component{
 
       const displayView=()=>{
         if (this.state.display=='startTrip') {
-          return(<Trip selectDest={this.selectDest}/>);
+          return(<Trip selectDest={this.selectDest} userType={this.props.userType}/>);
         }else if (this.state.display=='editProfile') {
           return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
         }  else {
@@ -80,7 +150,7 @@ class Passenger extends React.Component{
                 </div>
               </div>
               <div>
-                 
+
               </div>
 
             </div>

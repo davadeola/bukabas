@@ -38,7 +38,7 @@ const Trip=(props)=>(
         <div className="col-md-12">
 
           {props.startedTrip==false && <button type="submit" className="btn-success btn">Start trip</button>}
-
+          {props.userType=='passenger' && <button type="submit" className="btn-success btn">Find bus</button>}
 
         </div>
       </div>
@@ -48,6 +48,7 @@ const Trip=(props)=>(
     <div className="row">
       <div className="col-md-12">
         {props.startedTrip && <button className="btn-warning btn" onClick={props.stopTracking}>Stop trip</button>}
+        {props.userType=='passenger' && <button className="btn-success btn">Show Map</button>}
 
       </div>
     </div>

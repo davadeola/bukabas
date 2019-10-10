@@ -68,7 +68,7 @@ class Driver extends React.Component {
         }, (err) => {
           console.warn('ERROR(' + err.code + '): ' + err.message);
         },{
-          enableHighAccuracy: false,
+          enableHighAccuracy: true,
           timeout: 1000,
           maximumAge: 0
         })
