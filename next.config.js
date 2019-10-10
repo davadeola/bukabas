@@ -9,9 +9,21 @@ const withCss = require('@zeit/next-css');
          return acc;
        }, {});
 
-       
+
        config.plugins.push(new webpack.DefinePlugin(env));
 
        return config;
-     }
+     },
+
+     exportPathMap: function() {
+        return {
+            '/': { page: '/' },
+            '/company': { page: '/company' },
+            '/driver': { page: '/driver' },
+            '/login': { page: '/login' },
+            '/passenger': { page: '/passenger' },
+            '/signup': { page: '/signup' },
+            '/welcome': { page: '/welcome' },
+        };
+    },
    });
