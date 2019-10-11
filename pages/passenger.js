@@ -5,6 +5,7 @@ import withAuth from '../lib/helpers/withAuth';
 import EditProfile from '../components/editProfile'
 import Trip from '../components/Trip'
 import {auth, firebase} from '../lib/firebase'
+import PassMap from '../components/passMap'
 
 //import Map from '../components/Map'
 
@@ -18,13 +19,16 @@ class Passenger extends React.Component{
     movingBuses:[],
     myBuses:[],
     currLocation:{},
-    geoId:''
+    geoId:'',
+    startedTrip: false,
+
   }
 
   selectStartTrip=()=>{
     this.setState({display:'startTrip'});
     console.log(this.props.userType);
     this.getAllMovingBuses();
+    this.getPassLocationFromDb();
   }
 
   selEditProfile=()=>{
@@ -58,6 +62,23 @@ class Passenger extends React.Component{
 
   }
 
+
+  showMap=()=>{
+    this.setState({display: 'map'});
+  }
+
+
+  stopTracking = () => {
+    let db = firebase.firestore();
+    this.setState({startedTrip: false});
+
+    navigator.geolocation.clearWatch(this.state.geoId);
+    db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
+      alert("You have ended your trip");
+    })
+    console.log("STopped tracking");
+  }
+
   selectDest=(e)=>{
     e.preventDefault();
     let db = firebase.firestore();
@@ -74,8 +95,10 @@ class Passenger extends React.Component{
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-        this.setState({geoId: GeoId, currLocation: location},()=>{
-          db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination":myDest, "geoId": this.state.geoId}).then(() => {
+        this.setState({geoId: GeoId, currLocation: location, startedTrip: true},()=>{
+
+
+          db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination":myDest, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip, "myBuses": myBuses}).then(() => {
             console.log(this.state.currLocation +". Updated your location");
           })
         });
@@ -83,7 +106,7 @@ class Passenger extends React.Component{
       }, (err) => {
         console.warn('ERROR(' + err.code + '): ' + err.message);
       },{
-        enableHighAccuracy: false,
+        enableHighAccuracy: true,
         timeout: 1000,
         maximumAge: 0
       })
@@ -94,8 +117,15 @@ class Passenger extends React.Component{
   }
 
 
-  getPassLocation=()=>{
+  getPassLocationFromDb=()=>{
+    let db = firebase.firestore();
+    db.collection("passenger").doc(this.props.userId).onSnapshot(doc => {
+      if (!doc.empty) {
 
+          this.setState({currLocation: doc.data().location, geoId: doc.data().geoId, startedTrip: doc.data().startedTrip, myBuses: doc.data().myBuses});
+
+      }
+    })
   }
 
 
@@ -123,10 +153,12 @@ class Passenger extends React.Component{
 
       const displayView=()=>{
         if (this.state.display=='startTrip') {
-          return(<Trip selectDest={this.selectDest} userType={this.props.userType}/>);
+          return(<Trip selectDest={this.selectDest} stopTracking={this.stopTracking} userType={this.props.userType} showMap={this.showMap} startedTrip={this.state.startedTrip}/>);
         }else if (this.state.display=='editProfile') {
           return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
-        }  else {
+        }  else if (this.state.display=='map') {
+          return(<PassMap buses={this.state.myBuses} currLocation={this.state.currLocation}/>);
+        } else {
           return(
             <div>
               <h1>Welcome to your Dashboard.</h1>
