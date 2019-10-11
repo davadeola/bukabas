@@ -5,7 +5,7 @@ const DashButton=()=>(
   <div className="dash-btn">
     <Link href='/welcome'>
       <a title='Dashboard'>
-        <button className="btn btn-success ">Dashboard</button>
+        <button className="btn nav-disp" ><img src="/static/images/dashboard.png" className="nav-icon"/></button>
       </a>
     </Link>
   </div>

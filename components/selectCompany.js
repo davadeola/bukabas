@@ -17,7 +17,7 @@ class SelectCompany extends React.Component{
   render(){
 
     return(
-      <div className="container">
+      <div className="container ">
         <div className="row">
           <div className="col-md-12">
             <h1>Select the company you work for</h1>
@@ -26,7 +26,7 @@ class SelectCompany extends React.Component{
 
         <div className="row">
           <div className="col-md-12">
-            <form className="form" onSubmit={this.props.handleSelectCompany}>
+            <form className="form login-form" onSubmit={this.props.handleSelectCompany}>
 
             <select value={this.state.value} onChange={this.handleChange} className='form-control' name="comp">
               <option value="">Select your bus company</option>

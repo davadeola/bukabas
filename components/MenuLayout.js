@@ -8,11 +8,17 @@ import ProfileInfo from './profileInfo'
 
 const MenuLayout = (props) => (
 
+<div className="menu-modal">
   <div className="menu-layout">
     <div className="container-fluid">
+
+      <div className="row text-right" onClick={props.dropMenu}>
+        <img className="nav-icon" src="/static/images/close.png"/>
+      </div>
       <div className="row">
         <div className="col-md-12">
           <ProfileInfo userName={props.userName}/>
+
         </div>
       </div>
       <div className="row ">
@@ -43,7 +49,7 @@ const MenuLayout = (props) => (
           </div>
 
       </div>
-
+      </div>
     </div>
   </div>
 )

@@ -13,6 +13,7 @@ import PassMap from '../components/passMap'
 class Passenger extends React.Component{
 
   state={
+    showMenu:false,
     display:'',
     fullName: '',
     phoneNum:'',
@@ -21,7 +22,16 @@ class Passenger extends React.Component{
     currLocation:{},
     geoId:'',
     startedTrip: false,
+    stops:["Donholm", "CBD", "Strathmore", "Lang'ata"]
 
+  }
+
+  showMenu=()=>{
+    this.setState({showMenu: true})
+  }
+
+  dropMenu=()=>{
+    this.setState({showMenu: false})
   }
 
   selectStartTrip=()=>{
@@ -74,7 +84,7 @@ class Passenger extends React.Component{
 
     navigator.geolocation.clearWatch(this.state.geoId);
     db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
-      alert("You have ended your trip");
+      alert("We stopped tracking your location");
     })
     console.log("STopped tracking");
   }
@@ -153,14 +163,14 @@ class Passenger extends React.Component{
 
       const displayView=()=>{
         if (this.state.display=='startTrip') {
-          return(<Trip selectDest={this.selectDest} stopTracking={this.stopTracking} userType={this.props.userType} showMap={this.showMap} startedTrip={this.state.startedTrip}/>);
+          return(<Trip stops={this.state.stops} selectDest={this.selectDest} stopTracking={this.stopTracking} userType={this.props.userType} showMap={this.showMap} startedTrip={this.state.startedTrip}/>);
         }else if (this.state.display=='editProfile') {
           return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
         }  else if (this.state.display=='map') {
           return(<PassMap buses={this.state.myBuses} currLocation={this.state.currLocation}/>);
         } else {
           return(
-            <div>
+            <div className="text-center">
               <h1>Welcome to your Dashboard.</h1>
               <h4>Select an option to begin exploring as a {this.props.userType}</h4>
 
@@ -173,11 +183,19 @@ class Passenger extends React.Component{
 
           <Layout>
             <div className="container-fluid">
+
+              {this.state.showMenu && <div className="col-md-3">
+                  <MenuLayout dropMenu={this.dropMenu} userName={this.props.userName} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip}  userType={this.props.userType} />
+              </div>
+            }
+
               <div className="row">
-                <div className="col-md-3">
-                    <MenuLayout userName={this.props.userName} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip}  userType={this.props.userType} />
+
+
+                <div className="col-md-2">
+                  <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/></button>
                 </div>
-                <div className="col-md-9">
+                <div className="col-md-10">
                   {displayView()}
                 </div>
               </div>

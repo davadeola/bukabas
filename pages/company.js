@@ -13,6 +13,7 @@ import AssignDriver from '../components/assignDriver'
 
 class Company extends React.Component{
   state={
+    showMenu:false,
     display:'',
     numplate:'',
     busType:'',
@@ -24,6 +25,14 @@ class Company extends React.Component{
     driverLocation:{}
   }
 
+
+    showMenu=()=>{
+      this.setState({showMenu: true})
+    }
+
+    dropMenu=()=>{
+      this.setState({showMenu: false})
+    }
 
 
 
@@ -229,7 +238,7 @@ getCoord=(driverId)=>{
         return(<AssignDriver drivers={this.state.drivers} buses={this.state.buses} handleAssignDriver={this.handleAssignDriver}/>);
       } else {
         return(
-          <div>
+          <div className="text-center">
             <h1>Welcome to your Dashboard.</h1>
             <h4>Select an option to begin exploring as a {this.props.userType}</h4>
           </div>
@@ -241,11 +250,17 @@ getCoord=(driverId)=>{
         <Layout>
 
           <div className="container-fluid">
+              {this.state.showMenu &&   <div className="col-md-3">
+                    <MenuLayout dropMenu={this.dropMenu} userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} selAssignDriver={this.selAssignDriver} userType={this.props.userType} />
+                </div>
+              }
             <div className="row">
-              <div className="col-md-3">
-                  <MenuLayout userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} selAssignDriver={this.selAssignDriver} userType={this.props.userType} />
+
+              <div className="col-md-2">
+                <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/></button>
               </div>
-              <div className="col-md-9">
+
+              <div className="col-md-10">
                 {displayView()}
               </div>
             </div>

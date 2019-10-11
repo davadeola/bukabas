@@ -13,6 +13,7 @@ import EditProfile from '../components/editProfile'
 
 class Driver extends React.Component {
   state = {
+    showMenu:false,
     display: '',
     companies: [],
     compFullName: '',
@@ -22,10 +23,18 @@ class Driver extends React.Component {
     startedTrip: false,
     currLocation: {},
     geoId: '',
-    destination:''
+    destination:'',
+    stops:["Donholm", "CBD", "Strathmore", "Lang'ata"]
   }
 
 
+  showMenu=()=>{
+    this.setState({showMenu: true})
+  }
+
+  dropMenu=()=>{
+    this.setState({showMenu: false})
+  }
 
   getPreviousLoc=()=>{
     let db = firebase.firestore();
@@ -161,7 +170,7 @@ class Driver extends React.Component {
   render() {
     const displayView = () => {
       if (this.state.display == 'startTrip') {
-        return (<Trip selectDest={this.selectDest} startedTrip={this.state.startedTrip} stopTracking={this.stopTracking}/>);
+        return (<Trip selectDest={this.selectDest} startedTrip={this.state.startedTrip} stopTracking={this.stopTracking} userType={this.props.userType} stops={this.state.stops}/>);
       } else if (this.state.display == 'viewBus') {
         return (<ViewBus/>);
       } else if (this.state.display == 'selectCompany') {
@@ -169,7 +178,7 @@ class Driver extends React.Component {
       } else if (this.state.display == 'editProfile') {
         return (<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else {
-        return (<div>
+        return (<div className="text-center">
           <h1>Welcome to your Dashboard.</h1>
           <h4>Select an option to begin exploring as a {this.props.userType}</h4>
 
@@ -178,11 +187,17 @@ class Driver extends React.Component {
     }
     return (<Layout>
       <div className="container-fluid">
+        {this.state.showMenu && <div className="col-md-2">
+          <MenuLayout dropMenu={this.dropMenu} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany} userName={this.props.userName}/>
+        </div>}
         <div className="row">
-          <div className="col-md-3">
-            <MenuLayout selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany} userName={this.props.userName}/>
+          <div className="col-md-2">
+            <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/></button>
           </div>
-          <div className="col-md-9">
+
+
+
+          <div className="col-md-10">
             {displayView()}
           </div>
         </div>

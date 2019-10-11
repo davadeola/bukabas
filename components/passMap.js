@@ -14,7 +14,7 @@ class PassMap extends React.Component{
       viewport: {
         width: "100%",
         height: "75vh",
-        zoom: 10,
+        zoom: 15,
         latitude:1.2921,
         longitude:36.8219
       },

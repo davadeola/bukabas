@@ -1,38 +1,15 @@
 import React from 'react'
+import DestCard from './destCard'
 
 
 const Trip=(props)=>(
 
   <div className="container">
     <h1>Select your destination</h1>
-    <form  className="form" onSubmit={props.selectDest}>
-      <div className="form-group row">
-        <div className="col-md-12">
-          <input type="radio" name="dest"  value="CBD/Athi River" className='form-check-input'/>
-          <label>CBD/Athi River</label>
-        </div>
-      </div>
+    <form  className="form login-form" onSubmit={props.selectDest}>
 
-      <div className="form-group row">
-        <div className="col-md-12">
-          <input type="radio" name="dest"  value="Donholm" className='form-check-input'/>
-          <label>Donholm</label>
-        </div>
-      </div>
+      {props.stops.map(stop=><DestCard key={stop} stop={stop}/>)}
 
-      <div className="form-group row">
-        <div className="col-md-12">
-          <input type="radio" name="dest"  value="Strathmore" className='form-check-input'/>
-          <label>Strathmore</label>
-        </div>
-      </div>
-
-      <div className="form-group row">
-        <div className="col-md-12">
-          <input type="radio" name="dest"  value="Langata" className='form-check-input'/>
-          <label>Langata</label>
-        </div>
-      </div>
 
       <div className="form-group row">
         <div className="col-md-12">
@@ -46,8 +23,9 @@ const Trip=(props)=>(
 
 
     <div className="row">
-      <div className="col-md-12">
-        {props.startedTrip && <button className="btn-warning btn" onClick={props.stopTracking}>Stop trip</button>}
+      <div className="col-md-12 text-center">
+        {props.startedTrip && props.userType=='passenger' && <button className="btn-warning btn" onClick={props.stopTracking}>Stop search</button>}
+        {props.startedTrip && props.userType=='driver' && <button className="btn-warning btn" onClick={props.stopTracking}>Stop trip</button>}
         {props.startedTrip && props.userType=='passenger' && <button className="btn-success btn" onClick={props.showMap}>Show Map</button>}
 
       </div>
