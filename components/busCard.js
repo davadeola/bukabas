@@ -5,7 +5,8 @@ const BusCard=(props)=>(
       <h4 className="">Number plate: {props.numplate}</h4>
       <p className="">Bus make: {props.busType}</p>
       <p className=" font-weight-bold">Driver: {props.driver? props.driver : 'unassigned'}</p>
-    </div>
+      <p>{props.startedTrip? 'Moving' : 'Stopped trip'}</p>
+  </div>
 )
 
 export default BusCard

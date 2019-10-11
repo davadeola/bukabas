@@ -69,7 +69,8 @@ selAssignDriver=()=>{
             location: doc.data().location,
             busNumplate: doc.data().busNumplate,
             phone: doc.data().phone,
-            destination: doc.data().destination
+            destination: doc.data().destination,
+
           }
 
           data.push(d);
@@ -163,7 +164,7 @@ getAllBuses=()=>{
           numplate : doc.id,
           busType: doc.data().busType,
           driver: doc.data().driver,
-
+          startedTrip: doc.data().startedTrip
         }
 
         data.push(d);

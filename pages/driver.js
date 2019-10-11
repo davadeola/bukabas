@@ -55,9 +55,26 @@ class Driver extends React.Component {
 
   }
 
+  getNumplate=()=>{
+    let db = firebase.firestore();
+    let drivAccount = db.collection('driver').doc(this.props.userId).get().then(doc=>{
+      if (doc.exists) {
+
+          this.setState({
+            busNumplate: doc.data().busNumplate
+          },()=>{
+            console.log(this.state.busNumplate);
+          })
+      }
+    }).catch(err=>{
+      console.log(err.message);
+    })
+  }
+
   selectDest = (e) => {
 
     e.preventDefault();
+
 
     const destination = e.target.elements.dest.value;
     let db = firebase.firestore();
@@ -71,10 +88,14 @@ class Driver extends React.Component {
           this.setState({geoId: GeoId, currLocation: location},()=>{
             db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip}).then(() => {
               console.log(this.state.currLocation +". Updated your location");
-            })
+            });
+
+          db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": this.state.startedTrip}).then(() => {
+            console.log("updated bus trip");
           });
 
-        }, (err) => {
+        })
+      }, (err) => {
           console.warn('ERROR(' + err.code + '): ' + err.message);
         },{
           enableHighAccuracy: true,
@@ -98,6 +119,9 @@ class Driver extends React.Component {
     db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
       alert("You have ended your trip");
     })
+    db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": false}).then(() => {
+      console.log("updated bus trip");
+    });
     console.log("STopped tracking");
   }
 
@@ -106,6 +130,7 @@ class Driver extends React.Component {
   selectStartTrip = () => {
     this.setState({display: 'startTrip'});
     this.getPreviousLoc();
+    this.getNumplate();
   }
 
   selectCompany = () => {
