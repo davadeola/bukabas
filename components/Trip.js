@@ -6,7 +6,7 @@ const Trip=(props)=>(
 
   <div className="container">
     <h1>Select your destination</h1>
-    <form  className="form login-form" onSubmit={props.selectDest}>
+    <form  className="form radio-form" onSubmit={props.selectDest}>
 
       {props.stops.map(stop=><DestCard key={stop} stop={stop}/>)}
 

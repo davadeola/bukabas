@@ -9,6 +9,7 @@ import AddNewBus from '../components/addNewBus'
 import ViewBus from '../components/viewBus'
 import EditProfile from '../components/editProfile'
 import AssignDriver from '../components/assignDriver'
+import Overview from '../components/overview'
 
 
 class Company extends React.Component{
@@ -243,10 +244,7 @@ getCoord=(driverId)=>{
         return(<AssignDriver drivers={this.state.drivers} buses={this.state.buses} handleAssignDriver={this.handleAssignDriver}/>);
       } else {
         return(
-          <div className="text-center">
-            <h1>Welcome to your Dashboard.</h1>
-            <h4>Select an option to begin exploring as a {this.props.userType}</h4>
-          </div>
+          <Overview profImg={this.props.profImg} userType={this.props.userType}/>
         )
       }
     }
@@ -262,7 +260,7 @@ getCoord=(driverId)=>{
             <div className="row">
 
               <div className="col-md-2">
-                <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/></button>
+                <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/><h4>Menu</h4></button>
               </div>
 
               <div className="col-md-10">

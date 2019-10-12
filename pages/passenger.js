@@ -6,6 +6,7 @@ import EditProfile from '../components/editProfile'
 import Trip from '../components/Trip'
 import {auth, firebase} from '../lib/firebase'
 import PassMap from '../components/passMap'
+import Overview from '../components/overview'
 
 //import Map from '../components/Map'
 
@@ -169,13 +170,7 @@ class Passenger extends React.Component{
         }  else if (this.state.display=='map') {
           return(<PassMap buses={this.state.myBuses} currLocation={this.state.currLocation}/>);
         } else {
-          return(
-            <div className="text-center">
-              <h1>Welcome to your Dashboard.</h1>
-              <h4>Select an option to begin exploring as a {this.props.userType}</h4>
-
-            </div>
-          )
+          return(<Overview profImg={this.props.profImg} userType={this.props.userType}/>)
         }
       }
 
@@ -193,7 +188,7 @@ class Passenger extends React.Component{
 
 
                 <div className="col-md-2">
-                  <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/></button>
+                  <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/><h4>Menu</h4></button>
                 </div>
                 <div className="col-md-10">
                   {displayView()}

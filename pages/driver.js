@@ -10,6 +10,7 @@ import Trip from '../components/Trip'
 import SelectCompany from '../components/selectCompany'
 import router from 'next/router'
 import EditProfile from '../components/editProfile'
+import Overview from '../components/overview'
 
 class Driver extends React.Component {
   state = {
@@ -203,11 +204,7 @@ class Driver extends React.Component {
       } else if (this.state.display == 'editProfile') {
         return (<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else {
-        return (<div className="text-center">
-          <h1>Welcome to your Dashboard.</h1>
-          <h4>Select an option to begin exploring as a {this.props.userType}</h4>
-
-        </div>)
+        return (<Overview profImg={this.props.profImg} userType={this.props.userType}/>)
       }
     }
     return (<Layout>
@@ -217,7 +214,7 @@ class Driver extends React.Component {
         </div>}
         <div className="row">
           <div className="col-md-2">
-            <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/></button>
+            <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/><h4>Menu</h4></button>
           </div>
 
 
