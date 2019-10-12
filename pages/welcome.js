@@ -9,6 +9,7 @@ import Loadscreen from '../components/loadingScreen'
 const Welcome=(props)=>(
   <Layout>
   <div className="text-center">
+    <img src={props.profImg || "/static/images/account.png"} className="account-img"/>
     <h1>Welcome. You are signed in as {props.userName}</h1>
 
 {props.userName &&
