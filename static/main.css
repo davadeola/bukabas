@@ -130,7 +130,7 @@ display: none !important;
   background-color: #34d7d7;
   height: 95%;
   padding: .5em;
-  width: 22.5rem;
+  width: 20rem;
   overflow-y: auto;
 }
 
@@ -157,7 +157,7 @@ display: none !important;
   padding: 0;
 }
 .profile-layout{
-  height: 10rem;
+  height: 100%;
 }
 
 .profile-img{

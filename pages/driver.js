@@ -213,7 +213,7 @@ class Driver extends React.Component {
     return (<Layout>
       <div className="container-fluid">
         {this.state.showMenu && <div className="col-md-2">
-          <MenuLayout dropMenu={this.dropMenu} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany} userName={this.props.userName}/>
+          <MenuLayout profImg={this.props.profImg} dropMenu={this.dropMenu} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany} userName={this.props.userName}/>
         </div>}
         <div className="row">
           <div className="col-md-2">

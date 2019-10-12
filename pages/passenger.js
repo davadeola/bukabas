@@ -185,7 +185,7 @@ class Passenger extends React.Component{
             <div className="container-fluid">
 
               {this.state.showMenu && <div className="col-md-3">
-                  <MenuLayout dropMenu={this.dropMenu} userName={this.props.userName} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip}  userType={this.props.userType} />
+                  <MenuLayout profImg={this.props.profImg} dropMenu={this.dropMenu} userName={this.props.userName} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip}  userType={this.props.userType} />
               </div>
             }
 
