@@ -10,7 +10,7 @@ const ProfileInfo = (props) => (
     <div className="container-fluid text-center account-tab">
       <div className="row ">
         <div className="col-md-12">
-          <img src="/static/images/account.png" className="account-img"/>
+          <img src={props.profImg || "/static/images/account.png"} className="account-img"/>
         </div>
       </div>
       <div className="row">

@@ -17,7 +17,7 @@ const MenuLayout = (props) => (
       </div>
       <div className="row">
         <div className="col-md-12">
-          <ProfileInfo userName={props.userName}/>
+          <ProfileInfo userName={props.userName} profImg={props.profImg}/>
 
         </div>
       </div>

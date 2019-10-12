@@ -4,7 +4,7 @@ import Layout from '../components/Layout'
 import MenuLayout from '../components/MenuLayout'
 import withAuth from '../lib/helpers/withAuth'
 import Map from '../components/Map'
-import {auth, firebase} from '../lib/firebase'
+import {auth, firebase, storage} from '../lib/firebase'
 import AddNewBus from '../components/addNewBus'
 import ViewBus from '../components/viewBus'
 import EditProfile from '../components/editProfile'
@@ -22,8 +22,12 @@ class Company extends React.Component{
     fullName: '',
     phoneNum:'',
     drivers:[],
-    driverLocation:{}
+    driverLocation:{},
+
   }
+
+
+
 
 
     showMenu=()=>{
@@ -252,7 +256,7 @@ getCoord=(driverId)=>{
 
           <div className="container-fluid">
               {this.state.showMenu &&   <div className="col-md-3">
-                    <MenuLayout dropMenu={this.dropMenu} userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} selAssignDriver={this.selAssignDriver} userType={this.props.userType} />
+                    <MenuLayout profImg={this.props.profImg} dropMenu={this.dropMenu} userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} selAssignDriver={this.selAssignDriver} userType={this.props.userType} />
                 </div>
               }
             <div className="row">
