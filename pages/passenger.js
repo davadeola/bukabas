@@ -170,7 +170,7 @@ class Passenger extends React.Component{
         }  else if (this.state.display=='map') {
           return(<PassMap buses={this.state.myBuses} currLocation={this.state.currLocation}/>);
         } else {
-          return(<Overview profImg={this.props.profImg} userType={this.props.userType}/>)
+          return(<Overview profImg={this.props.profImg} userType={this.props.userType} userEmail={this.props.userEmail}/>)
         }
       }
 

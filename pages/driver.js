@@ -73,41 +73,46 @@ class Driver extends React.Component {
   }
 
   selectDest = (e) => {
+    if (this.state.busNumplate) {
+      e.preventDefault();
 
-    e.preventDefault();
 
+      const destination = e.target.elements.dest.value;
+      let db = firebase.firestore();
+      this.setState({startedTrip: true}, ()=>{
+        if (navigator.geolocation && this.state.startedTrip) {
+          let GeoId = navigator.geolocation.watchPosition(position => {
+            let location = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            this.setState({geoId: GeoId, currLocation: location},()=>{
+              db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip}).then(() => {
+                console.log(this.state.currLocation +". Updated your location");
+              });
 
-    const destination = e.target.elements.dest.value;
-    let db = firebase.firestore();
-    this.setState({startedTrip: true}, ()=>{
-      if (navigator.geolocation && this.state.startedTrip) {
-        let GeoId = navigator.geolocation.watchPosition(position => {
-          let location = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          this.setState({geoId: GeoId, currLocation: location},()=>{
-            db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip}).then(() => {
-              console.log(this.state.currLocation +". Updated your location");
+            db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": this.state.startedTrip}).then(() => {
+              console.log("updated bus trip");
             });
 
-          db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": this.state.startedTrip}).then(() => {
-            console.log("updated bus trip");
-          });
+          })
+        }, (err) => {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+          },{
+            enableHighAccuracy: true,
+            timeout: 1000,
+            maximumAge: 0
+          })
 
-        })
-      }, (err) => {
-          console.warn('ERROR(' + err.code + '): ' + err.message);
-        },{
-          enableHighAccuracy: true,
-          timeout: 1000,
-          maximumAge: 0
-        })
+        } else {
+          alert("Geolocation is not supported in your browser");
+        }
+      });
 
-      } else {
-        alert("Geolocation is not supported in your browser");
-      }
-    });
+    } else {
+      alert("Please select your company and contact your director to assign you a bus")
+    }
+
 
 
   }
@@ -204,7 +209,7 @@ class Driver extends React.Component {
       } else if (this.state.display == 'editProfile') {
         return (<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else {
-        return (<Overview profImg={this.props.profImg} userType={this.props.userType}/>)
+        return (<Overview profImg={this.props.profImg} userType={this.props.userType} lastSignedIn={this.props.lastSignedIn} creationTime={this.props.creationTime} userEmail={this.props.userEmail} userPhone={this.props.userPhone}/>)
       }
     }
     return (<Layout>
