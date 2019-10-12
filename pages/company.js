@@ -42,21 +42,21 @@ class Company extends React.Component{
 
 
   selectAddBus=()=>{
-    this.setState({display:'addNew'});
+    this.setState({display:'addNew', showMenu: false});
     this.getDriverList();
   }
   selectViewBus=()=>{
-    this.setState({display:'viewBus'},()=>{
+    this.setState({display:'viewBus', showMenu: false},()=>{
       this.getAllBuses();
     });
   }
 
   selEditProfile=()=>{
-    this.setState({display:'editProfile'})
+    this.setState({display:'editProfile', showMenu: false})
   }
 
 selAssignDriver=()=>{
-  this.setState({display: 'assignDriver'});
+  this.setState({display: 'assignDriver', showMenu: false});
   this.getAllBuses();
   this.getDriverList();
 }

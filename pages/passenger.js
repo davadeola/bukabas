@@ -36,14 +36,14 @@ class Passenger extends React.Component{
   }
 
   selectStartTrip=()=>{
-    this.setState({display:'startTrip'});
+    this.setState({display:'startTrip', showMenu: false});
     console.log(this.props.userType);
     this.getAllMovingBuses();
     this.getPassLocationFromDb();
   }
 
   selEditProfile=()=>{
-    this.setState({display:'editProfile'})
+    this.setState({display:'editProfile', showMenu: false})
   }
 
   getAllMovingBuses=()=>{

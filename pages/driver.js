@@ -129,18 +129,18 @@ class Driver extends React.Component {
 
 
   selectStartTrip = () => {
-    this.setState({display: 'startTrip'});
+    this.setState({display: 'startTrip', showMenu: false});
     this.getPreviousLoc();
     this.getNumplate();
   }
 
   selectCompany = () => {
-    this.setState({display: 'selectCompany'});
+    this.setState({display: 'selectCompany', showMenu: false});
     this.getCompanyList();
   }
 
   selEditProfile = () => {
-    this.setState({display: 'editProfile'})
+    this.setState({display: 'editProfile', showMenu: false})
   }
 
   getCompanyList = () => {
