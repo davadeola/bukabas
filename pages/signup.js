@@ -8,6 +8,7 @@ import SignUpform from '../components/signUpForm'
 import router from 'next/router'
 import Loadscreen from '../components/loadingScreen'
 import {auth, firebase} from '../lib/firebase'
+import ImageUpload from '../components/imageUpload'
 
 class Signup extends React.Component {
   state = {
@@ -17,13 +18,23 @@ class Signup extends React.Component {
     password:'',
     phone:'',
     userType: '',
-    showLoadScreen: false
+    showLoadScreen: false,
+    upload: false,
+    doneUploading:false
   }
 
   componentDidMount() {
-  
+
   }
 
+  doneUploading=()=>{
+    this.setState({ doneUploading: true});
+    this.onFinishedUploading();
+  }
+
+  onFinishedUploading=()=>{
+    router.push('/welcome');
+  }
 
   showLoadScreen = () => {
     this.setState({
@@ -65,13 +76,16 @@ class Signup extends React.Component {
               email: this.state.email,
               fullName: this.state.fullName,
               phone:this.state.phone,
-              userType: this.state.userType
+              userType: this.state.userType,
+              startedTrip: false
             }
 
             db.collection(this.state.userType).doc(this.state.userHandle).set(userCredentials).then(()=>{
               alert("Successfully created");
-              var newRoute = '/'.concat(this.state.userType);
-              router.push(newRoute);
+              // var newRoute = '/'.concat(this.state.userType);
+              // router.push(newRoute);
+              //router.push("/welcome");
+              this.setState({upload: true, showLoadScreen: false})
             })
           }).catch((err)=>{
             alert(err.message+" Please try again");
@@ -93,9 +107,11 @@ class Signup extends React.Component {
 
   render() {
     const RenderContent = () => {
-      if (this.state.userType) {
-        return <SignUpform handleSignUp={this.handleSignUp} backToSelect={this.backToSelect}/>
-    }  else {
+      if (this.state.userType && !this.state.upload) {
+        return <SignUpform handleSignUp={this.handleSignUp} backToSelect={this.backToSelect} newUserType={this.state.userType}/>
+    }   else if(this.state.upload && this.state.userType){
+        return <ImageUpload email={this.state.email} doneUploading={this.doneUploading}/>
+      }else {
         return <Signupselect handleSelect={this.handleSelect}/>
       }
     }

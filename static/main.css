@@ -19,6 +19,8 @@ h1{
 }
 
 
+
+
 .nav-disp{
   width: 30px;
   padding: 0;
@@ -125,19 +127,23 @@ display: none !important;
 }
 
 .menu-layout{
-  background-color: #58e1e1;
-  height: 100vh;
+  background-color: #34d7d7;
+  height: 95%;
   padding: .5em;
   width: 22.5rem;
+  overflow-y: auto;
 }
 
 .menu-modal{
   position: fixed;
   z-index: 1000;
-  top: 8.5%;
+  top: 0;
   left: 0;
   background-color: rgba(88, 225, 225, 0.15);
   width: 100%;
+  height: 100%;
+  padding-bottom: 5%;
+  overflow: auto;
 }
 
 .menu-card{
@@ -151,6 +157,10 @@ display: none !important;
   padding: 0;
 }
 .profile-layout{
+  height: 10rem;
+}
+
+.profile-img{
   height: 10rem;
 }
 
@@ -229,4 +239,25 @@ select{
 
 .dest-card input[type="radio"]:hover+label{
   transform: none;
+}
+
+.form-control-file{
+  margin: 0 25% 0 25%;
+  visibility: hidden;
+}
+
+.progress{
+  text-align: center;
+  margin:0 25% 2.5% 25%;
+  width: 50%;
+}
+
+
+.image-upload > label {
+  cursor: pointer;
+}
+.image-upload > input {
+  visibility:hidden;
+  width:0;
+  height:0
 }

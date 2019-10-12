@@ -4,10 +4,11 @@ import Head from 'next/head'
 import Nav from '../components/nav'
 import Layout from '../components/Layout'
 
+
 const SignUpform=(props)=>(
 
       <div className="container ">
-        <h1 className="text-center">Create a new account</h1>
+        <h1 className="text-center">Create a new {props.newUserType} account</h1>
         <form className="login-form" onSubmit={props.handleSignUp}>
           <div className="row">
             <div className="col-md-12">
@@ -30,6 +31,7 @@ const SignUpform=(props)=>(
                 <input name="conpassword" type="password" placeholder="Confirm your password" className="form-control" required/>
               </div>
             </div>
+
 
 
           </div>
