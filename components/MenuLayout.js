@@ -24,6 +24,7 @@ const MenuLayout = (props) => (
       <div className="row ">
 
         <div className="text-center col-md-12">
+          <div className="card menu-card" onClick={props.showOverview}>Overview</div>
           {
             props.userType=='company' &&
             <div>

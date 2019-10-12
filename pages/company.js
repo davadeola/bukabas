@@ -28,6 +28,9 @@ class Company extends React.Component{
   }
 
 
+  showOverview=()=>{
+    this.setState({display:'', showMenu: false})
+  }
 
 
 
@@ -244,7 +247,7 @@ getCoord=(driverId)=>{
         return(<AssignDriver drivers={this.state.drivers} buses={this.state.buses} handleAssignDriver={this.handleAssignDriver}/>);
       } else {
         return(
-          <Overview profImg={this.props.profImg} userType={this.props.userType}/>
+          <Overview profImg={this.props.profImg} userType={this.props.userType} lastSignedIn={this.props.lastSignedIn} creationTime={this.props.creationTime} userEmail={this.props.userEmail} userPhone={this.props.userPhone}/>
         )
       }
     }
@@ -254,7 +257,7 @@ getCoord=(driverId)=>{
 
           <div className="container-fluid">
               {this.state.showMenu &&   <div className="col-md-3">
-                    <MenuLayout profImg={this.props.profImg} dropMenu={this.dropMenu} userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} selAssignDriver={this.selAssignDriver} userType={this.props.userType} />
+                    <MenuLayout showOverview={this.showOverview} profImg={this.props.profImg} dropMenu={this.dropMenu} userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} selAssignDriver={this.selAssignDriver} userType={this.props.userType} />
                 </div>
               }
             <div className="row">

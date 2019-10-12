@@ -27,6 +27,10 @@ class Passenger extends React.Component{
 
   }
 
+  showOverview=()=>{
+    this.setState({display:'', showMenu: false})
+  }
+
   showMenu=()=>{
     this.setState({showMenu: true})
   }
@@ -170,7 +174,9 @@ class Passenger extends React.Component{
         }  else if (this.state.display=='map') {
           return(<PassMap buses={this.state.myBuses} currLocation={this.state.currLocation}/>);
         } else {
-          return(<Overview profImg={this.props.profImg} userType={this.props.userType} userEmail={this.props.userEmail}/>)
+          return(
+            <Overview profImg={this.props.profImg} userType={this.props.userType} lastSignedIn={this.props.lastSignedIn} creationTime={this.props.creationTime} userEmail={this.props.userEmail} userPhone={this.props.userPhone}/>
+          )
         }
       }
 
@@ -180,7 +186,7 @@ class Passenger extends React.Component{
             <div className="container-fluid">
 
               {this.state.showMenu && <div className="col-md-3">
-                  <MenuLayout profImg={this.props.profImg} dropMenu={this.dropMenu} userName={this.props.userName} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip}  userType={this.props.userType} />
+                  <MenuLayout showOverview={this.showOverview} profImg={this.props.profImg} dropMenu={this.dropMenu} userName={this.props.userName} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip}  userType={this.props.userType} />
               </div>
             }
 

@@ -28,6 +28,9 @@ class Driver extends React.Component {
     stops:["Donholm", "CBD", "Strathmore", "Lang'ata"]
   }
 
+  showOverview=()=>{
+    this.setState({display:'', showMenu: false})
+  }
 
   showMenu=()=>{
     this.setState({showMenu: true})
@@ -215,7 +218,7 @@ class Driver extends React.Component {
     return (<Layout>
       <div className="container-fluid">
         {this.state.showMenu && <div className="col-md-2">
-          <MenuLayout profImg={this.props.profImg} dropMenu={this.dropMenu} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany} userName={this.props.userName}/>
+          <MenuLayout showOverview={this.showOverview} profImg={this.props.profImg} dropMenu={this.dropMenu} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany} userName={this.props.userName}/>
         </div>}
         <div className="row">
           <div className="col-md-2">
