@@ -43,7 +43,7 @@ h1{
 }
 
 a, h1, p{
-  color: #22183c;
+  color:#3f3d56;
 }
 
 a:hover{
@@ -55,9 +55,30 @@ a:hover{
   position: relative;
 }
 
+#home-screen{
+  background-image: url("images/bus-stop.png");
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+#home-screen .btn{
+  background-color: #3f3d56;
+  width: 15em;
+  color: white;
+  height: 3.5em;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+
 .landing h1{
-  margin-top: 2.5%;
+  margin-top: .5em;
   text-align: center;
+  display: block;
+  font-size: 2.5rem;
 }
 
 .btn-row{
@@ -116,9 +137,12 @@ display: none !important;
 .home-img{
   display: block;
   margin: 0 auto;
-  margin-top: 2.5%;
-  width: 15em  ;
+  margin-top: 3.5em;
+  margin-bottom: 3.5em;
+  width: 12.5em  ;
 }
+
+
 
 .marker{
   width: 2em;
@@ -156,7 +180,7 @@ display: none !important;
   padding: .75em;
   margin-bottom: .25em;
   cursor: pointer;
-  color:  #22183c;
+  color: #3f3d56;
 }
 
 .my-landing .col-md-4{
@@ -212,6 +236,7 @@ display: none !important;
   z-index: 4000;
   display: flex;
   top: 0;
+  margin-bottom: 2em;
 }
 
 
@@ -238,7 +263,7 @@ select{
   width: 175px;
   height: 175px;
   border-radius: 50%;
-  margin-top: 2.5%;
+
 }
 
 .text-right .nav-icon{

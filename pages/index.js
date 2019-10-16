@@ -8,18 +8,21 @@ import CallAction from '../components/callAction'
 
 const Home=()=>(
     <Layout>
+
         <TopNav/>
-        <div className="landing container-fluid">
+        <div ></div>
+        <div className="landing container-fluid" id="home-screen">
           <div className="row">
 
-            <div className="col-md-12"> <img src="/static/images/logo.png" id="person" className="home-img"/> <h1 className="display-4">Transforming public transport</h1>
+            <div className="col-md-12">
+
+             <img src="/static/images/logo.png" id="person" className="home-img"/>
+
               <CallAction/>
             </div>
 
           </div>
         </div>
-
-      <About/>
 
 
     </Layout>

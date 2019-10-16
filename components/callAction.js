@@ -36,7 +36,7 @@ class CallAction extends React.Component{
           </Link>
           :
           <Link href='/signup'>
-            <a title='Sign up page'><button className="btn">Get started today</button></a>
+            <a title='Sign up page'><button className="btn">Get started</button></a>
           </Link>
         }
 

@@ -4,6 +4,7 @@ import Layout from '../components/Layout'
 import {auth, firebase} from '../lib/firebase'
 import router from 'next/router'
 import Loadscreen from '../components/loadingScreen'
+import TopNav from '../components/topNav'
 
 class Login extends React.Component{
   state={
@@ -40,10 +41,13 @@ class Login extends React.Component{
       location.reload(false);
     })
   }
+
+    //{//this.state.showLoadScreen && <Loadscreen/>}
   render(){
     return(
       <Layout>
-      {this.state.showLoadScreen && <Loadscreen/>}
+      <TopNav/>
+
       <div className="container loading">
         <h1 className="text-center">Log into your account</h1>
         <form className="login-form" onSubmit={this.handleSignIn}>

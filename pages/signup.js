@@ -8,6 +8,7 @@ import SignUpform from '../components/signUpForm'
 import router from 'next/router'
 import Loadscreen from '../components/loadingScreen'
 import {auth, firebase} from '../lib/firebase'
+import TopNav from '../components/topNav'
 import ImageUpload from '../components/imageUpload'
 
 class Signup extends React.Component {
@@ -117,6 +118,7 @@ class Signup extends React.Component {
     }
 
     return (<Layout>
+      <TopNav/>
       {this.state.showLoadScreen && <Loadscreen/>}
       <RenderContent/>
 
