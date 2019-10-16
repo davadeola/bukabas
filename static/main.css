@@ -19,16 +19,6 @@ h1{
 }
 
 
-
-
-.nav-disp{
-  width: 30px;
-  padding: 0;
-  margin: 0 auto auto 0;
-  display: flex;
-  justify-content: flex-start;
-}
-
 .radio-form{
   /* padding-left: 15em;
   padding-right: 15em; */
@@ -48,7 +38,8 @@ h1{
 }
 
 .my-landing{
-  padding-top: 2.5%;
+  /* padding-top: 2.5%; */
+  padding-bottom: 5em;
 }
 
 a, h1, p{
@@ -65,7 +56,7 @@ a:hover{
 }
 
 .landing h1{
-  margin-top: 25%;
+  margin-top: 2.5%;
   text-align: center;
 }
 
@@ -123,7 +114,10 @@ display: none !important;
 }
 
 .home-img{
-  width: 100%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 2.5%;
+  width: 15em  ;
 }
 
 .marker{
@@ -142,6 +136,7 @@ display: none !important;
   height: 95%;
   padding: .5em;
   width: 20rem;
+  margin-top: 4em;
   overflow-y: auto;
 }
 
@@ -209,13 +204,40 @@ display: none !important;
   justify-content: space-evenly;
 }
 
+.top-nav{
+  background-color: #34d7d7;
+  height: 4em;
+  justify-content: space-evenly;
+  position: sticky;
+  z-index: 4000;
+  display: flex;
+  top: 0;
+}
+
+
+
+.top-nav img{
+  width: 40px;
+  /* display: block; */
+  margin: 25% 0 25% 0;
+
+}
+
+#logo{
+  position: absolute;
+  width: 60px;
+  margin: 0;
+}
+
 select{
   margin-bottom: 5em;
 }
 
 
 .account-img{
-  width: 10em;
+  width: 175px;
+  height: 175px;
+  border-radius: 50%;
 }
 
 .text-right .nav-icon{
@@ -271,4 +293,14 @@ select{
   visibility:hidden;
   width:0;
   height:0
+}
+
+
+.nav-disp{
+  width: 50px;
+  padding: 0;
+  margin: 0 auto auto 0;
+  /* display: flex; */
+  color: white;
+  justify-content: flex-start;
 }

@@ -10,7 +10,7 @@ import ViewBus from '../components/viewBus'
 import EditProfile from '../components/editProfile'
 import AssignDriver from '../components/assignDriver'
 import Overview from '../components/overview'
-
+import TopNav from '../components/topNav'
 
 class Company extends React.Component{
   state={
@@ -254,7 +254,7 @@ getCoord=(driverId)=>{
     return(
 
         <Layout>
-
+          <TopNav showMenu={this.showMenu}/>
           <div className="container-fluid">
               {this.state.showMenu &&   <div className="col-md-3">
                     <MenuLayout showOverview={this.showOverview} profImg={this.props.profImg} dropMenu={this.dropMenu} userName={this.props.userName} display={this.state.display} selectAddBus={this.selectAddBus} selectViewBus={this.selectViewBus} selEditProfile={this.selEditProfile} selAssignDriver={this.selAssignDriver} userType={this.props.userType} />

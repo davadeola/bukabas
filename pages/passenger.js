@@ -7,7 +7,7 @@ import Trip from '../components/Trip'
 import {auth, firebase} from '../lib/firebase'
 import PassMap from '../components/passMap'
 import Overview from '../components/overview'
-
+import TopNav from '../components/topNav'
 //import Map from '../components/Map'
 
 
@@ -183,6 +183,7 @@ class Passenger extends React.Component{
       return(
 
           <Layout>
+            <TopNav showMenu={this.showMenu}/>
             <div className="container-fluid">
 
               {this.state.showMenu && <div className="col-md-3">

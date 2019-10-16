@@ -44,7 +44,7 @@ class Nav extends React.Component{
         <nav className="navbar navbar-light bg-light fixed-bottom">
           <Link href='/'>
             <a title="Home">
-              <button className="btn btn-default nav-disp"><img src="/static/images/home-icon.png" className="nav-icon"/></button>
+              <button className="btn btn-default nav-disp text-center"><img src="/static/images/home-icon.png" className="nav-icon"/>Home</button>
             </a>
           </Link>
           {this.state.isLoggedIn && <DashButton/>}

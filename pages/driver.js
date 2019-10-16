@@ -11,6 +11,7 @@ import SelectCompany from '../components/selectCompany'
 import router from 'next/router'
 import EditProfile from '../components/editProfile'
 import Overview from '../components/overview'
+import TopNav from '../components/topNav'
 
 class Driver extends React.Component {
   state = {
@@ -76,8 +77,9 @@ class Driver extends React.Component {
   }
 
   selectDest = (e) => {
-    if (this.state.busNumplate) {
-      e.preventDefault();
+    e.preventDefault();
+    if (this.state.busNumplate && this.state.compFullName != '') {
+
 
 
       const destination = e.target.elements.dest.value;
@@ -216,18 +218,18 @@ class Driver extends React.Component {
       }
     }
     return (<Layout>
+      <TopNav showMenu={this.showMenu}/>
+
       <div className="container-fluid">
         {this.state.showMenu && <div className="col-md-2">
           <MenuLayout showOverview={this.showOverview} profImg={this.props.profImg} dropMenu={this.dropMenu} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany} userName={this.props.userName}/>
         </div>}
         <div className="row">
-          <div className="col-md-2">
-            <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/><h4>Menu</h4></button>
-          </div>
 
 
 
-          <div className="col-md-10">
+
+          <div className="col-md-12">
             {displayView()}
           </div>
         </div>
