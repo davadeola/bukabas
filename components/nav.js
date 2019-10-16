@@ -47,7 +47,11 @@ class Nav extends React.Component{
               <button className="btn btn-default nav-disp text-center"><img src="/static/images/home-icon.png" className="nav-icon"/>Home</button>
             </a>
           </Link>
-          {this.state.isLoggedIn && <DashButton/>}
+          {this.state.isLoggedIn ? <DashButton/> : <Link href='/signup'>
+            <a title="Sign up">
+              <button className="btn btn-default nav-disp text-center"><img src="/static/images/new-account.png" className="nav-icon"/>Sign up</button>
+            </a>
+          </Link>}
           <Loginbtn isLoggedIn={this.state.isLoggedIn} handleSignOut={this.handleSignOut}/>
         </nav>
     </div>
