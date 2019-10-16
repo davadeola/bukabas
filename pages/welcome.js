@@ -4,10 +4,12 @@ import Layout from '../components/Layout'
 import router from 'next/router'
 import Link from 'next/link'
 import Loadscreen from '../components/loadingScreen'
+import TopNav from '../components/topNav'
 
 
 const Welcome=(props)=>(
   <Layout>
+      <TopNav/>
   <div className="text-center">
     <img src={props.profImg || "/static/images/account.png"} className="account-img"/>
     <h1>Welcome. You are signed in as {props.userName}</h1>
