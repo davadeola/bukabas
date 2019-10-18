@@ -23,7 +23,8 @@ class PassMap extends React.Component{
       fullName:'',
       busNumplate:'',
       destination:'',
-      phone:''
+      phone:'',
+      distance: 0
     }
 
 
@@ -37,9 +38,7 @@ class PassMap extends React.Component{
     }
 
     showPopup=(bus)=>{
-      console.log(bus);
-
-      this.setState({fullName: bus.fullName, busNumplate: bus.busNumplate, phone: bus.phone, destination: bus.destination});
+      this.setState({fullName: bus.fullName, busNumplate: bus.busNumplate, phone: bus.phone, destination: bus.destination, distance: bus.distance});
 
     }
 
@@ -60,7 +59,7 @@ render(){
       </Marker>
 
        <div style={{position: 'absolute', bottom: 0}}>
-         <DriverInfo fullName={this.state.fullName} busNumplate={this.state.busNumplate} phone={this.state.phone} destination={this.state.destination}/>
+         <DriverInfo fullName={this.state.fullName} busNumplate={this.state.busNumplate} phone={this.state.phone} destination={this.state.destination} distance={this.state.distance}/>
        </div>
        <div style={{position: 'absolute', right: 0}}>
          <NavigationControl captureClick={true} onViewportChange={this.onViewportChange}/>

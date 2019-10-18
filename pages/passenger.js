@@ -44,7 +44,7 @@ class Passenger extends React.Component {
 
   selectStartTrip = () => {
     this.setState({display: 'startTrip', showMenu: false});
-    console.log(this.props.userType);
+
     this.getAllMovingBuses();
     this.getPassLocationFromDb();
   }
@@ -67,7 +67,8 @@ class Passenger extends React.Component {
             location: doc.data().location,
             busNumplate: doc.data().busNumplate,
             phone: doc.data().phone,
-            destination: doc.data().destination
+            destination: doc.data().destination,
+            distance: getDistance(this.state.currLocation, doc.data().location)
           }
 
           data.push(d);
@@ -97,25 +98,15 @@ class Passenger extends React.Component {
     db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
       alert("We stopped tracking your location");
     })
-    console.log("STopped tracking");
   }
 
-  getPassPresentLocation = () => {
-    let db = firebase.firestore();
 
-  }
 
   selectDest = (e) => {
     e.preventDefault();
     let db = firebase.firestore();
     let myDest = e.target.elements.dest.value;
 
-    this.setState({
-      myDest: myDest,
-      startedTrip: true
-    }, () => {
-      this.getAllMovingBuses();
-    })
 
     if (navigator.geolocation) {
       let GeoId = navigator.geolocation.watchPosition(position => {
@@ -127,6 +118,7 @@ class Passenger extends React.Component {
           currLocation: location
         }, () => {
           db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination": this.state.myDest, "startedTrip": this.state.startedTrip});
+          console.log(this.state.currLocation);
         })
       }, (err) => {
           console.warn('ERROR(' + err.code + '): ' + err.message);
@@ -145,6 +137,13 @@ class Passenger extends React.Component {
       alert("Geolocation is not supported in your browser");
     }
 
+
+        this.setState({
+          myDest: myDest,
+          startedTrip: true
+        }, () => {
+          this.getAllMovingBuses();
+        })
 }
 
   getPassLocationFromDb = () => {
