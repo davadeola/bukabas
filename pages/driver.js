@@ -43,7 +43,7 @@ class Driver extends React.Component {
 
   getPreviousLoc=()=>{
     let db = firebase.firestore();
-    let drivAccount = db.collection('driver').doc(this.props.userId).get().then(doc=>{
+    let drivAccount = db.collection('driver').doc(this.props.userId).onSnapshot(doc=>{
       if (doc.exists) {
 
           this.setState({
@@ -53,7 +53,7 @@ class Driver extends React.Component {
             currLocation:doc.data().currLocation
           })
       }
-    }).catch(err=>{
+    },(err)=>{
       console.log(err.message);
     })
 
@@ -62,16 +62,17 @@ class Driver extends React.Component {
 
   getNumplate=()=>{
     let db = firebase.firestore();
-    let drivAccount = db.collection('driver').doc(this.props.userId).get().then(doc=>{
+    let drivAccount = db.collection('driver').doc(this.props.userId).onSnapshot(doc=>{
       if (doc.exists) {
 
           this.setState({
-            busNumplate: doc.data().busNumplate
+            busNumplate: doc.data().busNumplate,
+            compFullName: doc.data().compFullName
           },()=>{
             console.log(this.state.busNumplate);
           })
       }
-    }).catch(err=>{
+    },(err)=>{
       console.log(err.message);
     })
   }
@@ -206,7 +207,7 @@ class Driver extends React.Component {
   render() {
     const displayView = () => {
       if (this.state.display == 'startTrip') {
-        return (<Trip selectDest={this.selectDest} startedTrip={this.state.startedTrip} stopTracking={this.stopTracking} userType={this.props.userType} stops={this.state.stops}/>);
+        return (<Trip destination={this.state.destination} selectDest={this.selectDest} startedTrip={this.state.startedTrip} stopTracking={this.stopTracking} userType={this.props.userType} stops={this.state.stops}/>);
       } else if (this.state.display == 'viewBus') {
         return (<ViewBus/>);
       } else if (this.state.display == 'selectCompany') {

@@ -330,3 +330,11 @@ select{
   color: white;
   justify-content: flex-start;
 }
+
+
+.driver-info{
+  background-color: white;
+  z-index: 1000;
+  margin: 0 25% 0 25%;
+  width: 20rem;
+}

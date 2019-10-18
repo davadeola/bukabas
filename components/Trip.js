@@ -5,7 +5,10 @@ import DestCard from './destCard'
 const Trip=(props)=>(
 
   <div className="container">
-    <h1>Select your destination</h1>
+
+    <h1>{props.destination && props.startedTrip ? "Destination :" + props.destination : "Select your destination"}</h1>
+
+  {!props.startedTrip &&
     <form  className="form radio-form" onSubmit={props.selectDest}>
 
       {props.stops.map(stop=><DestCard key={stop} stop={stop}/>)}
@@ -21,7 +24,7 @@ const Trip=(props)=>(
       </div>
     </form>
 
-
+}
     <div className="row">
       <div className="col-md-12 text-center">
         {props.startedTrip && props.userType=='passenger' && <button className="btn-warning btn" onClick={props.stopTracking}>Stop search</button>}

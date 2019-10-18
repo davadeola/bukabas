@@ -24,7 +24,7 @@ class Company extends React.Component{
     phoneNum:'',
     drivers:[],
     driverLocation:{},
-
+    destination:''
   }
 
 
@@ -78,7 +78,7 @@ selAssignDriver=()=>{
             busNumplate: doc.data().busNumplate,
             phone: doc.data().phone,
             destination: doc.data().destination,
-
+            startedTrip: doc.data().startedTrip
           }
 
           data.push(d);
@@ -164,7 +164,7 @@ handleEditProfile=(e)=>{
 
 getAllBuses=()=>{
   let db = firebase.firestore();
-  db.collection("bus").where('companyId', '==', this.props.userId).get().then(snapshot=>{
+  db.collection("bus").where('companyId', '==', this.props.userId).onSnapshot(snapshot=>{
     let data=[];
     if(!snapshot.empty){
       snapshot.forEach(doc => {
@@ -172,7 +172,7 @@ getAllBuses=()=>{
           numplate : doc.id,
           busType: doc.data().busType,
           driver: doc.data().driver,
-          startedTrip: doc.data().startedTrip
+          startedTrip: doc.data().startedTrip,
         }
 
         data.push(d);
@@ -214,15 +214,26 @@ handleAssignDriver=(e)=>{
 
 
 getCoord=(driverId)=>{
+  if(driverId){
+
+
   let db = firebase.firestore();
   db.collection('driver').doc(driverId).onSnapshot(doc=>{
     if (doc.exists) {
-      this.setState({driverLocation: doc.data().location, display: 'map'},()=>{
-        console.log(this.state.driverLocation);
+      this.setState(
+        {
+        driverLocation: doc.data().location,
+        display: 'map',
+        fullName: doc.data().fullName,
+        numplate: doc.data().busNumplate,
+        destination: doc.data().destination,
+        phoneNum: doc.data().phone
       })
     }
   })
-
+}else{
+  alert("Assign this bus a driver")
+}
 }
 
 
@@ -242,7 +253,7 @@ getCoord=(driverId)=>{
       } else if (this.state.display=='editProfile') {
         return(<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else if (this.state.display=='map') {
-        return(<Map driverLocation={this.state.driverLocation}/>);
+        return(<Map driverLocation={this.state.driverLocation} fullName={this.state.fullName} phone={this.state.phoneNum} busNumplate={this.state.numplate} destination={this.state.destination}/>);
       } else if (this.state.display=='assignDriver') {
         return(<AssignDriver drivers={this.state.drivers} buses={this.state.buses} handleAssignDriver={this.handleAssignDriver}/>);
       } else {
@@ -266,7 +277,7 @@ getCoord=(driverId)=>{
                 <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/><h4>Menu</h4></button>
               </div>
 
-              <div className="col-md-10">
+              <div className="col-md-12">
                 {displayView()}
               </div>
             </div>
