@@ -19,12 +19,19 @@ class PassMap extends React.Component{
         longitude:36.8219
       },
 
-    };
+    }
+
+
+    onViewportChange=(viewport) =>{
+      this.setState({viewport});
+    }
+
+
 render(){
   const { viewport } = this.state;
   return (
     <div style={{ margin: '0 auto'}}>
-    <ReactMapGL latitude={this.props.currLocation.lat} longitude={this.props.currLocation.lng} zoom={viewport.zoom} width={viewport.width} height={viewport.height} mapboxApiAccessToken={TOKEN} mapStyle="mapbox://styles/mapbox/streets-v8"  onViewportChange={(viewport) =>this.setState({viewport})}>
+    <ReactMapGL latitude={this.props.currLocation.lat} longitude={this.props.currLocation.lng} zoom={viewport.zoom} width={viewport.width} height={viewport.height} mapboxApiAccessToken={TOKEN} mapStyle="mapbox://styles/mapbox/streets-v8"  onViewportChange={this.onViewportChange}>
       {this.props.buses.map(bus=>
         <Marker key={bus.driverId} latitude={bus.location.lat} longitude={bus.location.lng} offsetLeft={-20} offsetTop={-10}>
           <img className="marker" src="/static/images/bus-marker.png"/>

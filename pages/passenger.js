@@ -23,9 +23,11 @@ class Passenger extends React.Component{
     currLocation:{},
     geoId:'',
     startedTrip: false,
-    stops:["Donholm", "CBD", "Strathmore", "Lang'ata"]
+    stops:["Donholm", "CBD", "Strathmore", "Lang'ata"],
+    myDest:''
 
   }
+
 
   showOverview=()=>{
     this.setState({display:'', showMenu: false})
@@ -42,7 +44,7 @@ class Passenger extends React.Component{
   selectStartTrip=()=>{
     this.setState({display:'startTrip', showMenu: false});
     console.log(this.props.userType);
-    this.getAllMovingBuses();
+    //this.getAllMovingBuses();
     this.getPassLocationFromDb();
   }
 
@@ -52,7 +54,7 @@ class Passenger extends React.Component{
 
   getAllMovingBuses=()=>{
     let db = firebase.firestore();
-    db.collection("driver").where("startedTrip", "==", true).onSnapshot(snapshot => {
+    db.collection("driver").where("startedTrip", "==", true).where("destination", "==", this.state.myDest).onSnapshot(snapshot => {
       let data = [];
       if (!snapshot.empty) {
         snapshot.forEach(doc => {
@@ -71,7 +73,10 @@ class Passenger extends React.Component{
         })
 
       }
-      this.setState({movingBuses: data});
+      this.setState({movingBuses: data},()=>{
+        db.collection('passenger').doc(this.props.userId).update({"myBuses": this.state.movingBuses});
+
+      });
 
     })
 
@@ -98,10 +103,11 @@ class Passenger extends React.Component{
     e.preventDefault();
     let db = firebase.firestore();
     let myDest = e.target.elements.dest.value;
-    let myBuses = this.state.movingBuses.filter((bus)=>{
-      return bus.destination == myDest;
-    })
-    this.setState({myBuses: myBuses});
+
+    this.setState({myDest: myDest},()=>{
+
+      this.getAllMovingBuses();
+    });
 
 
     if (navigator.geolocation) {
@@ -113,7 +119,7 @@ class Passenger extends React.Component{
         this.setState({geoId: GeoId, currLocation: location, startedTrip: true},()=>{
 
 
-          db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination":myDest, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip, "myBuses": myBuses}).then(() => {
+          db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination":myDest, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip}).then(() => {
             console.log(this.state.currLocation +". Updated your location");
           })
         });
@@ -123,7 +129,7 @@ class Passenger extends React.Component{
       },{
         enableHighAccuracy: true,
         timeout: 1000,
-        maximumAge: 0
+        maximumAge: Infinity
       })
 
     } else {
@@ -137,7 +143,9 @@ class Passenger extends React.Component{
     db.collection("passenger").doc(this.props.userId).onSnapshot(doc => {
       if (!doc.empty) {
 
-          this.setState({currLocation: doc.data().location, geoId: doc.data().geoId, startedTrip: doc.data().startedTrip, myBuses: doc.data().myBuses});
+          this.setState({currLocation: doc.data().location, geoId: doc.data().geoId, startedTrip: doc.data().startedTrip, myBuses: doc.data().myBuses, myDest:doc.data().destination},()=>{
+            this.getAllMovingBuses()
+          });
 
       }
     })

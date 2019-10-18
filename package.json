@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev":"next dev",
+    "dev": "next dev",
     "build": "next build",
     "export": "next export",
     "deploy": "npm run build && npm run export"
@@ -15,6 +15,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "firebase": "^6.6.0",
+    "geolib": "^3.0.4",
     "google-map-react": "^1.1.4",
     "next": "^9.0.6",
     "pusher": "^2.2.2",
