@@ -6,7 +6,7 @@ const Trip=(props)=>(
 
   <div className="container">
 
-    <h1>{props.destination && props.startedTrip ? "Destination :" + props.destination : "Select your destination"}</h1>
+    <h1>{props.destination && props.startedTrip ? "You are heading to " + props.destination : "Select your destination"}</h1>
 
   {!props.startedTrip &&
     <form  className="form radio-form" onSubmit={props.selectDest}>

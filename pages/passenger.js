@@ -211,7 +211,7 @@ class Passenger extends React.Component {
               <h4>Menu</h4>
             </button>
           </div>
-          <div className="col-md-10">
+          <div className="col-md-12">
             {displayView()}
           </div>
         </div>

@@ -68,8 +68,6 @@ class Driver extends React.Component {
           this.setState({
             busNumplate: doc.data().busNumplate,
             compFullName: doc.data().compFullName
-          },()=>{
-            console.log(this.state.busNumplate);
           })
       }
     },(err)=>{
@@ -134,7 +132,7 @@ class Driver extends React.Component {
     db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": false}).then(() => {
       console.log("updated bus trip");
     });
-    console.log("STopped tracking");
+    
   }
 
 

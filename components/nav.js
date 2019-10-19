@@ -31,10 +31,7 @@ class Nav extends React.Component{
   verifyDbContent = (ref, email) => {
     ref.where('email', '==', email).onSnapshot(snapshot => {
       if (!snapshot.empty) {
-        this.setState({userType:ref.id},()=>{
-          console.log(this.state.userType);
-
-        });
+        this.setState({userType:ref.id});
 
       }
 
