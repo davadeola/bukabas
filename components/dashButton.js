@@ -1,9 +1,9 @@
 import React from 'react'
 import Link from 'next/link'
 
-const DashButton=()=>(
+const DashButton=(props)=>(
   <div className="dash-btn">
-    <Link href='/welcome'>
+    <Link href={'/'+props.link}>
       <a title='Dashboard'>
         <button className="btn nav-disp" ><img src="/static/images/dashboard.png" className="nav-icon"/>Dashboard</button>
       </a>
