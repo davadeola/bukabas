@@ -57,10 +57,10 @@ a:hover{
 
 #home-screen{
   background-image: url("images/bus-stop.png");
-  height: 100vh;
+
   background-position: center;
   background-size: cover;
-  overflow: hidden;
+  padding-bottom: 4em;
 }
 
 #home-screen .btn{
@@ -236,7 +236,6 @@ display: none !important;
   z-index: 4000;
   display: flex;
   top: 0;
-  margin-bottom: 2em;
 }
 
 
