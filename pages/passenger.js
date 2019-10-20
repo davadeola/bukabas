@@ -9,7 +9,7 @@ import PassMap from '../components/passMap'
 import Overview from '../components/overview'
 import TopNav from '../components/topNav'
 import {getDistance} from 'geolib';
-//import Map from '../components/Map'
+
 
 class Passenger extends React.Component {
 
