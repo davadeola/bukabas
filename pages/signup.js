@@ -12,6 +12,8 @@ import TopNav from '../components/topNav'
 import ImageUpload from '../components/imageUpload'
 
 class Signup extends React.Component {
+
+
   state = {
     email: '',
     userHandle:'',
@@ -24,9 +26,7 @@ class Signup extends React.Component {
     doneUploading:false
   }
 
-  componentDidMount() {
 
-  }
 
   doneUploading=()=>{
     this.setState({ doneUploading: true});
@@ -34,7 +34,7 @@ class Signup extends React.Component {
   }
 
   onFinishedUploading=()=>{
-    router.push('/welcome');
+    router.push('/'+this.state.userType);
   }
 
   showLoadScreen = () => {
@@ -78,7 +78,8 @@ class Signup extends React.Component {
               fullName: this.state.fullName,
               phone:this.state.phone,
               userType: this.state.userType,
-              startedTrip: false
+              startedTrip: false,
+              destination:''
             }
 
             db.collection(this.state.userType).doc(this.state.userHandle).set(userCredentials).then(()=>{
