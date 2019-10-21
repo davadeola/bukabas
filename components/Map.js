@@ -19,11 +19,17 @@ class Map extends React.Component{
       },
 
     };
+
+
+        onViewportChange=(viewport) =>{
+          this.setState({viewport});
+        }
+
 render(){
   const { viewport } = this.state;
   return (
     <div style={{ margin: '0 auto'}}>
-    <ReactMapGL latitude={this.props.driverLocation.lat} longitude={this.props.driverLocation.lng} zoom={viewport.zoom} width={viewport.width} height={viewport.height} mapboxApiAccessToken={TOKEN} mapStyle="mapbox://styles/mapbox/streets-v8"  onViewportChange={(viewport) => this.setState({viewport})}>
+    <ReactMapGL latitude={this.props.driverLocation.lat} longitude={this.props.driverLocation.lng} zoom={viewport.zoom} width={viewport.width} height={viewport.height} mapboxApiAccessToken={TOKEN} mapStyle="mapbox://styles/mapbox/streets-v8"  onViewportChange={() => this.onViewportChange}>
        <Marker latitude={this.props.driverLocation.lat} longitude={this.props.driverLocation.lng} offsetLeft={-20} offsetTop={-10}>
          <img className="marker" src="/static/images/bus-marker.png"/>
        </Marker>

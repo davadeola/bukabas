@@ -7,6 +7,8 @@ import Loadscreen from '../components/loadingScreen'
 import TopNav from '../components/topNav'
 
 class Login extends React.Component{
+  _isMounted= false;
+
   state={
     signedIn :false,
     showLoadScreen: false,
@@ -16,14 +18,24 @@ class Login extends React.Component{
   verifyDbContent = (ref, email) => {
     ref.where('email', '==', email).onSnapshot(snapshot => {
       if (!snapshot.empty) {
+        if (this._isMounted) {
+
+
         this.setState({userType:ref.id},()=>{
-          console.log(this.state.userType);
           router.push('/'+this.state.userType);
         });
-
+}
       }
 
     })
+  }
+
+  componentDidMount(){
+    this._isMounted = true;
+  }
+
+  componentWillUnmount(){
+    this._isMounted=false;
   }
 
   checkUserType = (email) => {
@@ -49,7 +61,7 @@ class Login extends React.Component{
 
   handleSignIn=(e)=>{
     e.preventDefault();
-    this.showLoadScreen();
+    //this.showLoadScreen();
     const email=e.target.elements.email.value;
     const password = e.target.elements.password.value;
 

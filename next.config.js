@@ -23,7 +23,7 @@ const withCss = require('@zeit/next-css');
             '/login': { page: '/login' },
             '/passenger': { page: '/passenger' },
             '/signup': { page: '/signup' },
-            '/welcome': { page: '/welcome' },
+            
         };
     },
    });

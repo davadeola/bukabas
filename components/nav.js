@@ -8,18 +8,24 @@ import DashButton from './dashButton'
 
 
 class Nav extends React.Component{
+_isMounted=false;
 
   state = {
-    isLoggedin: false,
+    isLoggedIn: false,
     userType:''
   }
 
   componentDidMount() {
+  this._isMounted=true
+
     let listener = auth.onAuthStateChanged((user) => {
       if (user) {
-        this.setState({isLoggedIn: true})
+        if (this._isMounted) {
+
+
         this.checkUserType(user.email);
         listener();
+      }
       } else {
         this.setState({isLoggedIn: false})
         listener();
@@ -31,8 +37,9 @@ class Nav extends React.Component{
   verifyDbContent = (ref, email) => {
     ref.where('email', '==', email).onSnapshot(snapshot => {
       if (!snapshot.empty) {
-        this.setState({userType:ref.id});
-
+        if (this._isMounted) {
+        this.setState({userType:ref.id, isLoggedIn: true});
+      }
       }
 
     })
@@ -55,13 +62,19 @@ class Nav extends React.Component{
   handleSignOut = (e) => {
     e.preventDefault();
     firebase.auth().signOut().then(()=>{
-      this.setState({isLoggedIn: false});
-      router.push('/');
+      this.setState({isLoggedIn: false},()=>{
+        router.push('/');
+      });
+
 
     }).catch(function(error) {
       alert('Oops! There was an error');
       console.log(error);
     });
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
   }
 
   render(){

@@ -7,16 +7,17 @@ import router from 'next/router';
 
 
 class CallAction extends React.Component{
-
+_isMounted=false;
   state = {
     isLoggedin: false,
     userType:''
   }
 
   componentDidMount() {
+    this._isMounted=true
     let listener = auth.onAuthStateChanged((user) => {
       if (user) {
-        this.setState({isLoggedIn: true});
+
         this.checkUserType(user.email);
         listener();
       } else {
@@ -31,14 +32,14 @@ class CallAction extends React.Component{
   verifyDbContent = (ref, email) => {
     ref.where('email', '==', email).onSnapshot(snapshot => {
       if (!snapshot.empty) {
-        this.setState({userType:ref.id});
+        if (this._isMounted) {
+        this.setState({userType:ref.id, isLoggedIn: true});
       }
-
+    }
     })
   }
 
   checkUserType = (email) => {
-
       let db = firebase.firestore();
       let passenger = db.collection("passenger");
       let driver = db.collection("driver");
@@ -46,10 +47,11 @@ class CallAction extends React.Component{
       this.verifyDbContent(passenger, email);
       this.verifyDbContent(driver, email);
       this.verifyDbContent(company, email);
-
-
   }
 
+  componentWillUnmount(){
+    this._isMounted=false;
+  }
 
 
 

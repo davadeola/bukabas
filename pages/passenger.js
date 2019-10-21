@@ -49,6 +49,8 @@ class Passenger extends React.Component {
     this.getPassLocationFromDb();
   }
 
+
+
   selEditProfile = () => {
     this.setState({display: 'editProfile', showMenu: false})
   }
@@ -72,6 +74,7 @@ class Passenger extends React.Component {
           }
 
           data.push(d);
+
         })
 
       }
@@ -79,10 +82,18 @@ class Passenger extends React.Component {
         movingBuses: data
       }, () => {
         db.collection('passenger').doc(this.props.userId).update({"myBuses": this.state.movingBuses});
-
       });
 
     })
+
+  }
+
+  nearDriverAlert=()=>{
+    this.state.movingBuses.forEach((d)=>{
+      if (d.distance<1000) {
+        alert(d.fullName +" driving bus "+d.busNumplate+" is nearby");
+      }
+    });
 
   }
 
@@ -92,13 +103,14 @@ class Passenger extends React.Component {
 
   stopTracking = () => {
     let db = firebase.firestore();
-    this.setState({startedTrip: false});
+    this.setState({startedTrip: false, movingBuses:[]});
 
     navigator.geolocation.clearWatch(this.state.geoId);
     db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
       alert("We stopped tracking your location");
     })
   }
+
 
 
 
@@ -143,6 +155,7 @@ class Passenger extends React.Component {
           startedTrip: true
         }, () => {
           this.getAllMovingBuses();
+
         })
 }
 
@@ -188,7 +201,7 @@ class Passenger extends React.Component {
       } else if (this.state.display == 'editProfile') {
         return (<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else if (this.state.display == 'map') {
-        return (<PassMap buses={this.state.movingBuses} currLocation={this.state.currLocation}/>);
+        return (<PassMap buses={this.state.movingBuses} currLocation={this.state.currLocation} userType={this.props.userType}/>);
       } else {
         return (<Overview profImg={this.props.profImg} userType={this.props.userType} lastSignedIn={this.props.lastSignedIn} creationTime={this.props.creationTime} userEmail={this.props.userEmail} userPhone={this.props.userPhone}/>)
       }
