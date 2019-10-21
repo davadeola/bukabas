@@ -25,9 +25,11 @@ handleChange=(event)=>{
               <div className="row">
                 <div className="col-md-12">
                   <div className="form-group row">
+                    <label>Number plate</label>
                     <input name="numplate" type="text" placeholder="Enter the number plate" className="form-control" />
                   </div>
                   <div className="form-group row">
+                    <label>Bus make</label>
                     <input name="busType" type="text" placeholder="Enter bus make" className="form-control" />
                   </div>
 

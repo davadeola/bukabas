@@ -77,7 +77,7 @@ class Driver extends React.Component {
 
   selectDest = (e) => {
     e.preventDefault();
-    if (this.state.busNumplate && this.state.compFullName != '') {
+    if (this.state.busNumplate !="" && this.state.compFullName != '') {
 
 
 
@@ -132,7 +132,7 @@ class Driver extends React.Component {
     db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": false}).then(() => {
       console.log("updated bus trip");
     });
-    
+
   }
 
 
@@ -183,9 +183,17 @@ class Driver extends React.Component {
       compFullName: e.target.elements.comp.value,
 
     }, () => {
-        db.collection('driver').doc(this.props.userId).update({"compFullName": this.state.compFullName}).then(() => {
+        db.collection('driver').doc(this.props.userId).update({"compFullName": this.state.compFullName, "busNumplate": ''}).then(() => {
           alert("Successfully changed your company");
         })
+        db.collection("bus").where('driver', '==', this.props.userId).get().then(snapshot=>{
+               if (!snapshot.empty) {
+                 snapshot.forEach(doc=>{
+                   db.collection('bus').doc(doc.id).update({"driver": ''})
+                 })
+               }
+             })
+
     })
   }
 

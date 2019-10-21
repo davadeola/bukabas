@@ -12,9 +12,11 @@ const EditProfile=(props)=>(
           <div className="row">
             <div className="col-md-12">
               <div className="form-group row">
+                <label>Full name</label>
                 <input name="fullName" type="text" placeholder="Full Name" className="form-control" />
               </div>
               <div className="form-group row">
+                <label>Phone number</label>
                 <input name="phone" type="text" placeholder="Phone number" className="form-control" />
               </div>
             </div>
