@@ -26,5 +26,3 @@ app.prepare()
     console.log(`> Ready on http://localhost:${port}`)
   })
 })
-
-© 2019 GitHub, Inc.
