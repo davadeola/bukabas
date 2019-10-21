@@ -1,8 +1,10 @@
 const webpack = require('webpack');
 const withCss = require('@zeit/next-css');
+const withOffline = require('next-offline');
+
    require('dotenv').config();
 
-   module.exports = withCss({
+   module.exports = withOffline(withCss({
      webpack: config => {
        const env = Object.keys(process.env).reduce((acc, curr) => {
          acc[`process.env.${curr}`] = JSON.stringify(process.env[curr]);
@@ -11,6 +13,7 @@ const withCss = require('@zeit/next-css');
 
 
        config.plugins.push(new webpack.DefinePlugin(env));
+       
 
        return config;
      },
@@ -23,7 +26,7 @@ const withCss = require('@zeit/next-css');
             '/login': { page: '/login' },
             '/passenger': { page: '/passenger' },
             '/signup': { page: '/signup' },
-            
+
         };
     },
-   });
+  }));

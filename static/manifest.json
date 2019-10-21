@@ -1,0 +1,14 @@
+{
+  "name": "Bukabas",
+  "short_name": "Bukabas",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#34d7d7",
+  "description": "Bus tracking app",
+  "icons": [{
+    "src": "/static/images/logo.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
+}

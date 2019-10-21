@@ -18,12 +18,14 @@
     "geolib": "^3.0.4",
     "google-map-react": "^1.1.4",
     "next": "^9.0.6",
+    "next-offline": "^4.0.6",
     "pusher": "^2.2.2",
     "pusher-js": "^5.0.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-map-gl": "^5.0.10",
-    "react-toastify": "^5.4.0"
+    "react-toastify": "^5.4.0",
+    "sw-precache-webpack-plugin": "^0.11.5"
   },
   "devDependencies": {
     "dotenv": "^8.1.0"

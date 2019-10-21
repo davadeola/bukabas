@@ -221,7 +221,7 @@ class Passenger extends React.Component {
 
           <div className="col-md-2">
             <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/>
-              <h4>Menu</h4>
+          
             </button>
           </div>
           <div className="col-md-12">
