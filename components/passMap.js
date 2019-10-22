@@ -46,7 +46,7 @@ render(){
   const { viewport } = this.state;
   return (
     <div style={{ margin: '0 auto'}}>
-    <ReactMapGL latitude={this.props.currLocation.lat} longitude={this.props.currLocation.lng} zoom={viewport.zoom} width={viewport.width} height={viewport.height} mapboxApiAccessToken={TOKEN} mapStyle="mapbox://styles/mapbox/streets-v8"  onViewportChange={()=>{this.onViewportChange}}>
+    <ReactMapGL latitude={this.props.currLocation.lat} longitude={this.props.currLocation.lng} zoom={viewport.zoom} width={viewport.width} height={viewport.height} mapboxApiAccessToken={TOKEN} mapStyle="mapbox://styles/mapbox/streets-v8"  onViewportChange={this.onViewportChange}>
       {this.props.buses.map(bus=>
         <Marker key={bus.driverId} latitude={bus.location.lat} longitude={bus.location.lng} busNumplate={bus.busNumplate} fullName={bus.fullName} offsetLeft={-20} offsetTop={-10} >
           <img className="marker" src="/static/images/bus-marker.png" onClick={()=>{this.showPopup(bus)}}/>
