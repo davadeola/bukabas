@@ -24,7 +24,8 @@ class Company extends React.Component{
     phoneNum:'',
     drivers:[],
     driverLocation:{},
-    destination:''
+    destination:'',
+    driver:''
   }
 
 
@@ -119,7 +120,7 @@ handleAddBus=(e)=>{
           });
 
 
-          db.collection("bus").where('driverId', '==', this.state.driver).get().then(snapshot=>{
+          db.collection("bus").where('driver', '==', this.state.driver).get().then(snapshot=>{
                  if (!snapshot.empty) {
                    snapshot.forEach(doc=>{
                      db.collection('bus').doc(doc.id).update({"driver": '', "driverId": ''})
