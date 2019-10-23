@@ -5,6 +5,8 @@ import Nav from '../components/nav'
 import Layout from '../components/Layout'
 import Signupselect from '../components/signupselect'
 import SignUpform from '../components/signUpForm'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import router from 'next/router'
 import Loadscreen from '../components/loadingScreen'
 import {auth, firebase} from '../lib/firebase'
@@ -26,7 +28,9 @@ class Signup extends React.Component {
     doneUploading:false
   }
 
-
+  componentDidMount(){
+    toast.configure();
+  }
 
   doneUploading=()=>{
     this.setState({ doneUploading: true});
@@ -69,7 +73,8 @@ class Signup extends React.Component {
       db.collection(this.state.userType).doc(this.state.userHandle).get()
       .then(doc=>{
         if (doc.exists) {
-          alert("This username already exists");
+          toast("This username already exists", {type: toast.TYPE.ERROR, autoClose: 2500})
+
           router.push('/signup');
         } else {
           firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(()=>{
@@ -83,14 +88,15 @@ class Signup extends React.Component {
             }
 
             db.collection(this.state.userType).doc(this.state.userHandle).set(userCredentials).then(()=>{
-              alert("Successfully created");
+              toast("Success", {type: toast.TYPE.SUCCESS, autoClose: 2500})
+
               // var newRoute = '/'.concat(this.state.userType);
               // router.push(newRoute);
               //router.push("/welcome");
               this.setState({upload: true, showLoadScreen: false})
             })
           }).catch((err)=>{
-            alert(err.message+" Please try again");
+            toast(err.message+" Please try again", {type: toast.TYPE.ERROR, autoclose: 2500});
             location.reload(false);
           })
         }

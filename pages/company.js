@@ -5,6 +5,8 @@ import MenuLayout from '../components/MenuLayout'
 import withAuth from '../lib/helpers/withAuth'
 import Map from '../components/Map'
 import {auth, firebase, storage} from '../lib/firebase'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AddNewBus from '../components/addNewBus'
 import ViewBus from '../components/viewBus'
 import EditProfile from '../components/editProfile'
@@ -12,7 +14,10 @@ import AssignDriver from '../components/assignDriver'
 import Overview from '../components/overview'
 import TopNav from '../components/topNav'
 
+
 class Company extends React.Component{
+
+
   state={
     showMenu:false,
     display:'',
@@ -26,6 +31,10 @@ class Company extends React.Component{
     driverLocation:{},
     destination:'',
     driver:''
+  }
+
+  componentDidMount(){
+    toast.configure();
   }
 
 
@@ -48,6 +57,7 @@ class Company extends React.Component{
   selectAddBus=()=>{
     this.setState({display:'addNew', showMenu: false});
     this.getDriverList();
+
   }
   selectViewBus=()=>{
     this.setState({display:'viewBus', showMenu: false},()=>{
@@ -106,7 +116,8 @@ handleAddBus=(e)=>{
       db.collection("bus").doc(this.state.numplate).get()
       .then(doc=>{
         if (doc.exists) {
-          alert("This number plate already exists");
+          toast("This number plate already exists", {type: toast.TYPE.ERROR, autoClose: 2500})
+
         }else{
           let busCrendentials={
             busType: this.state.busType,
@@ -116,7 +127,8 @@ handleAddBus=(e)=>{
           }
 
           db.collection('driver').doc(this.state.driver).update({"busNumplate": this.state.numplate}).then(() => {
-            alert("Updated your bus number plate");
+            toast("Updated your bus number plate", {type: toast.TYPE.SUCCESS, autoclose: 2500})
+
           });
 
 
@@ -128,7 +140,9 @@ handleAddBus=(e)=>{
                  }
                }).then(()=>{
                  db.collection("bus").doc(this.state.numplate).set(busCrendentials).then(()=>{
-                    alert("Successfully add a a new bus");
+                   toast("Successfully added", {type: toast.TYPE.SUCCESS, autoclose: 2500})
+
+
                  })
                })
 
@@ -157,7 +171,9 @@ handleEditProfile=(e)=>{
             })
         }
       }).then(()=>{
-      alert("Success");
+        toast("Success", {type: toast.TYPE.SUCCESS, autoclose: 2500})
+
+
     })
 
   })
@@ -193,7 +209,8 @@ handleAssignDriver=(e)=>{
 
 
   db.collection('driver').doc(driver).update({"busNumplate": numplate}).then(() => {
-    alert("Updated your bus number plate");
+    toast("Updated your bus number plate", {type: toast.TYPE.SUCCESS, autoclose: 2500})
+
   });
 
   db.collection("bus").where('driver', '==', driver).get().then(snapshot=>{
@@ -204,7 +221,9 @@ handleAssignDriver=(e)=>{
          }
        }).then(()=>{
          db.collection('bus').doc(numplate).update({"driver": driver}).then(() => {
-           alert("Updated bus information");
+           toast("Updated your bus information", {type: toast.TYPE.SUCCESS, autoclose: 2500})
+
+
          })
        })
 
@@ -233,7 +252,8 @@ getCoord=(driverId)=>{
     }
   })
 }else{
-  alert("Assign this bus a driver")
+  toast("Assign a driver to this bus", {type: toast.TYPE.WARNING, autoclose: 2500})
+
 }
 }
 
@@ -266,6 +286,7 @@ getCoord=(driverId)=>{
     return(
 
         <Layout>
+
           <TopNav showMenu={this.showMenu}/>
           <div className="container-fluid">
               {this.state.showMenu &&   <div className="col-md-3">
@@ -284,6 +305,7 @@ getCoord=(driverId)=>{
             </div>
 
           </div>
+
       </Layout>
     );
   }

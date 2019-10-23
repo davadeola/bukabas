@@ -4,6 +4,8 @@ import MenuLayout from '../components/MenuLayout'
 import withAuth from '../lib/helpers/withAuth';
 import EditProfile from '../components/editProfile'
 import Trip from '../components/Trip'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {auth, firebase} from '../lib/firebase'
 import PassMap from '../components/passMap'
 import Overview from '../components/overview'
@@ -29,6 +31,11 @@ class Passenger extends React.Component {
     myDest: ''
 
   }
+
+
+    componentDidMount(){
+      toast.configure();
+    }
 
   showOverview = () => {
     this.setState({display: '', showMenu: false})
@@ -91,7 +98,7 @@ class Passenger extends React.Component {
   nearDriverAlert=()=>{
     this.state.movingBuses.forEach((d)=>{
       if (d.distance<1000) {
-        alert(d.fullName +" driving bus "+d.busNumplate+" is nearby");
+        toast(d.fullName +" driving bus "+d.busNumplate+" is nearby", {type: toast.TYPE.INFO, autoClose: 2500});
       }
     });
 
@@ -107,7 +114,7 @@ class Passenger extends React.Component {
 
     navigator.geolocation.clearWatch(this.state.geoId);
     db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
-      alert("We stopped tracking your location");
+      toast("We stopped tracking your location", {type: toast.TYPE.SUCCESS, autoClose: 2500});
     })
   }
 
@@ -130,7 +137,7 @@ class Passenger extends React.Component {
           currLocation: location
         }, () => {
           db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination": this.state.myDest, "startedTrip": this.state.startedTrip});
-          console.log(this.state.currLocation);
+
         })
       }, (err) => {
           console.warn('ERROR(' + err.code + '): ' + err.message);
@@ -146,7 +153,7 @@ class Passenger extends React.Component {
         db.collection('passenger').doc(this.props.userId).update({geoId: this.state.geoId});
       })
     } else {
-      alert("Geolocation is not supported in your browser");
+      toast("Geolocation is not supported in your browser", {type: toast.TYPE.ERROR, autoClose: 2500});
     }
 
 
@@ -221,7 +228,7 @@ class Passenger extends React.Component {
 
           <div className="col-md-2">
             <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/>
-          
+
             </button>
           </div>
           <div className="col-md-12">

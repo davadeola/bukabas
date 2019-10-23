@@ -6,6 +6,8 @@ import Layout from '../components/Layout'
 import withAuth from '../lib/helpers/withAuth';
 import {auth, firebase} from '../lib/firebase'
 import MenuLayout from '../components/MenuLayout'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Trip from '../components/Trip'
 import SelectCompany from '../components/selectCompany'
 import router from 'next/router'
@@ -28,6 +30,11 @@ class Driver extends React.Component {
     destination:'',
     stops:["Donholm", "CBD", "Strathmore", "Lang'ata"]
   }
+
+
+    componentDidMount(){
+      toast.configure();
+    }
 
   showOverview=()=>{
     this.setState({display:'', showMenu: false})
@@ -92,7 +99,8 @@ class Driver extends React.Component {
             };
             this.setState({geoId: GeoId, currLocation: location},()=>{
               db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip}).then(() => {
-                console.log(this.state.currLocation +". Updated your location");
+                toast("Began tracking your location", {type: toast.TYPE.SUCCESS, autoClose: 2500});
+
               });
 
             db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": this.state.startedTrip}).then(() => {
@@ -109,12 +117,14 @@ class Driver extends React.Component {
           })
 
         } else {
-          alert("Geolocation is not supported in your browser");
+          toast("Geolocation is not supported in your browser", {type: toast.TYPE.ERROR, autoClose: 2500});
         }
       });
 
     } else {
-      alert("Please select your company and contact your director to assign you a bus")
+      toast("Select your company and contact your bus director", {type: toast.TYPE.WARNING, autoClose: 2500});
+
+
     }
 
 
@@ -127,7 +137,8 @@ class Driver extends React.Component {
 
     navigator.geolocation.clearWatch(this.state.geoId);
     db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
-      alert("You have ended your trip");
+      toast("Stopped tracking your location", {type: toast.TYPE.SUCCESS, autoClose: 2500});
+
     })
     db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": false}).then(() => {
       console.log("updated bus trip");
@@ -184,7 +195,8 @@ class Driver extends React.Component {
 
     }, () => {
         db.collection('driver').doc(this.props.userId).update({"compFullName": this.state.compFullName, "busNumplate": ''}).then(() => {
-          alert("Successfully changed your company");
+          toast("Success", {type: toast.TYPE.SUCCESS, autoClose: 2500});
+
         })
         db.collection("bus").where('driver', '==', this.props.userId).get().then(snapshot=>{
                if (!snapshot.empty) {
@@ -205,7 +217,8 @@ class Driver extends React.Component {
       phoneNum: e.target.elements.phone.value
     }, () => {
       db.collection(this.props.userType).doc(this.props.userId).update({fullName: this.state.fullName, phone: this.state.phoneNum}).then(() => {
-        alert("Success. Profile Edited");
+        toast("Success", {type: toast.TYPE.SUCCESS, autoClose: 2500});
+
       })
     })
   }

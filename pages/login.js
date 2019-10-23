@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from '../components/Layout'
 import {auth, firebase} from '../lib/firebase'
 import router from 'next/router'
@@ -8,6 +10,7 @@ import TopNav from '../components/topNav'
 
 class Login extends React.Component{
   _isMounted= false;
+   toastId = null;
 
   state={
     signedIn :false,
@@ -32,6 +35,7 @@ class Login extends React.Component{
 
   componentDidMount(){
     this._isMounted = true;
+    toast.configure();
   }
 
   componentWillUnmount(){
@@ -67,15 +71,20 @@ class Login extends React.Component{
 
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(()=>{
-      this.setState({signedIn: true},()=>{
+      toast("Logged in", {type: toast.TYPE.SUCCESS, autoClose: 2000});
+       this.setState({signedIn: true},()=>{
         this.checkUserType(email);
+
       })
 
     })
     .catch(err=>{
-      alert(err.message);
+      toast(err.message, {type: toast.TYPE.ERROR, autoClose: 2000, onClose: ()=>{
+        location.reload(false);
+      }});
+
       console.log(err);
-      location.reload(false);
+      //location.reload(false);
     })
   }
 
