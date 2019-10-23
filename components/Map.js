@@ -33,13 +33,14 @@ render(){
        <Marker latitude={this.props.driverLocation.lat} longitude={this.props.driverLocation.lng} offsetLeft={-20} offsetTop={-10}>
          <img className="marker" src="/static/images/bus-marker.png"/>
        </Marker>
-       <div style={{position: 'absolute', bottom: 0}}>
-         <DriverInfo fullName={this.props.fullName} busNumplate={this.props.busNumplate} phone={this.props.phone} destination={this.props.destination}/>
-       </div>
+
        <div style={{position: 'absolute', right: 0}}>
          <NavigationControl captureClick={true}/>
        </div>
      </ReactMapGL>
+     <div style={{position: 'absolute', bottom: 0}}>
+       <DriverInfo fullName={this.props.fullName} busNumplate={this.props.busNumplate} phone={this.props.phone} destination={this.props.destination}/>
+     </div>
      </div>
   )
 }

@@ -61,10 +61,11 @@ render(){
        <div style={{position: 'absolute', bottom: 0}}>
          <DriverInfo fullName={this.state.fullName} busNumplate={this.state.busNumplate} phone={this.state.phone} destination={this.state.destination} distance={this.state.distance} userType={this.props.userType}/>
        </div>
-       <div style={{position: 'absolute', right: 0}}>
-         <NavigationControl captureClick={true} onViewportChange={this.onViewportChange}/>
-       </div>
+
      </ReactMapGL>
+     <div style={{position: 'absolute', right: 0}}>
+       <NavigationControl captureClick={true} onViewportChange={this.onViewportChange}/>
+     </div>
      </div>
   )
 }
