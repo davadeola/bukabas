@@ -6,7 +6,7 @@ import Layout from '../components/Layout'
 import Signupselect from '../components/signupselect'
 import SignUpform from '../components/signUpForm'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import router from 'next/router'
 import Loadscreen from '../components/loadingScreen'
 import {auth, firebase} from '../lib/firebase'

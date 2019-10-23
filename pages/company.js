@@ -6,7 +6,7 @@ import withAuth from '../lib/helpers/withAuth'
 import Map from '../components/Map'
 import {auth, firebase, storage} from '../lib/firebase'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import AddNewBus from '../components/addNewBus'
 import ViewBus from '../components/viewBus'
 import EditProfile from '../components/editProfile'

@@ -5,7 +5,7 @@ import withAuth from '../lib/helpers/withAuth';
 import EditProfile from '../components/editProfile'
 import Trip from '../components/Trip'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import {auth, firebase} from '../lib/firebase'
 import PassMap from '../components/passMap'
 import Overview from '../components/overview'
@@ -89,6 +89,7 @@ class Passenger extends React.Component {
         movingBuses: data
       }, () => {
         db.collection('passenger').doc(this.props.userId).update({"myBuses": this.state.movingBuses});
+        this.nearDriverAlert();
       });
 
     })

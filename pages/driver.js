@@ -7,7 +7,7 @@ import withAuth from '../lib/helpers/withAuth';
 import {auth, firebase} from '../lib/firebase'
 import MenuLayout from '../components/MenuLayout'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import Trip from '../components/Trip'
 import SelectCompany from '../components/selectCompany'
 import router from 'next/router'

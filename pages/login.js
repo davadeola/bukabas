@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import Layout from '../components/Layout'
 import {auth, firebase} from '../lib/firebase'
 import router from 'next/router'
