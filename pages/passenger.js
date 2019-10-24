@@ -89,7 +89,7 @@ class Passenger extends React.Component {
         movingBuses: data
       }, () => {
         db.collection('passenger').doc(this.props.userId).update({"myBuses": this.state.movingBuses});
-        this.nearDriverAlert();
+
       });
 
     })
@@ -129,7 +129,9 @@ class Passenger extends React.Component {
 
 
     if (navigator.geolocation) {
+      toast("Began tracking your location", {type: toast.TYPE.SUCCESS, autoClose: 2500});
       let GeoId = navigator.geolocation.watchPosition(position => {
+
         let location = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
@@ -188,12 +190,15 @@ class Passenger extends React.Component {
   handleEditProfile = (e) => {
     e.preventDefault();
     let db = firebase.firestore();
+    const fullName= e.target.elements.fullName.value;
+    const phoneNum= e.target.elements.phone.value;
+
     this.setState({
-      fullName: e.target.elements.fullName.value,
-      phoneNum: e.target.elements.phone.value
+      fullName: fullName != ''? fullName: this.props.userName,
+      phoneNum: phoneNum != ''? phoneNum: this.props.userPhone
     }, () => {
       db.collection(this.props.userType).doc(this.props.userId).update({fullName: this.state.fullName, phone: this.state.phoneNum}).then(() => {
-        alert("Success");
+        toast("Success", {type: toast.TYPE.SUCCESS, autoClose: 2500});
 
       })
     })

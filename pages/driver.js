@@ -91,17 +91,16 @@ class Driver extends React.Component {
       const destination = e.target.elements.dest.value;
       let db = firebase.firestore();
       this.setState({startedTrip: true}, ()=>{
+
         if (navigator.geolocation && this.state.startedTrip) {
+          toast("Began tracking your location", {type: toast.TYPE.SUCCESS, autoClose: 2500});
           let GeoId = navigator.geolocation.watchPosition(position => {
             let location = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
             this.setState({geoId: GeoId, currLocation: location},()=>{
-              db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip}).then(() => {
-                toast("Began tracking your location", {type: toast.TYPE.SUCCESS, autoClose: 2500});
-
-              });
+              db.collection('driver').doc(this.props.userId).update({"location": this.state.currLocation, "destination":destination, "geoId": this.state.geoId, "startedTrip": this.state.startedTrip});
 
             db.collection('bus').doc(this.state.busNumplate).update({ "startedTrip": this.state.startedTrip}).then(() => {
               console.log("updated bus trip");
