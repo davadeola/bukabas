@@ -73,9 +73,10 @@ class Signup extends React.Component {
       db.collection(this.state.userType).doc(this.state.userHandle).get()
       .then(doc=>{
         if (doc.exists) {
-          toast("This username already exists", {type: toast.TYPE.ERROR, autoClose: 2500})
+          toast("This username already exists", {type: toast.TYPE.ERROR, autoClose: 2000, onClose: ()=>{
+              location.reload(false);
+          }})
 
-          router.push('/signup');
         } else {
           firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(()=>{
             let userCredentials={
@@ -96,8 +97,10 @@ class Signup extends React.Component {
               this.setState({upload: true, showLoadScreen: false})
             })
           }).catch((err)=>{
-            toast(err.message+" Please try again", {type: toast.TYPE.ERROR, autoclose: 2500});
-            location.reload(false);
+            toast(err.message+" Please try again", {type: toast.TYPE.ERROR, autoclose: 2500, onClose: ()=>{
+                location.reload(false);
+            }});
+
           })
         }
       });
