@@ -4,14 +4,13 @@ import MenuLayout from '../components/MenuLayout'
 import withAuth from '../lib/helpers/withAuth';
 import EditProfile from '../components/editProfile'
 import Trip from '../components/Trip'
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 import {auth, firebase} from '../lib/firebase'
 import PassMap from '../components/passMap'
 import Overview from '../components/overview'
 import TopNav from '../components/topNav'
 import {getDistance} from 'geolib';
-
 
 class Passenger extends React.Component {
 
@@ -28,14 +27,15 @@ class Passenger extends React.Component {
     stops: [
       "Donholm", "CBD", "Strathmore", "Lang'ata"
     ],
-    myDest: ''
+    myDest: "",
+    nearby: false,
+    count: 0
 
   }
 
-
-    componentDidMount(){
-      toast.configure();
-    }
+  componentDidMount() {
+    toast.configure();
+  }
 
   showOverview = () => {
     this.setState({display: '', showMenu: false})
@@ -52,11 +52,11 @@ class Passenger extends React.Component {
   selectStartTrip = () => {
     this.setState({display: 'startTrip', showMenu: false});
 
-    this.getAllMovingBuses();
     this.getPassLocationFromDb();
+    this.getAllMovingBuses();
+    this.nearDriverAlert();
+
   }
-
-
 
   selEditProfile = () => {
     this.setState({display: 'editProfile', showMenu: false})
@@ -96,12 +96,37 @@ class Passenger extends React.Component {
 
   }
 
-  nearDriverAlert=()=>{
-    this.state.movingBuses.forEach((d)=>{
-      if (d.distance<1000) {
-        toast(d.fullName +" driving bus "+d.busNumplate+" is nearby", {type: toast.TYPE.INFO, autoClose: 2500});
+
+  nearDriverAlert = () => {
+    let db = firebase.firestore();
+    db.collection('passenger').doc(this.props.userId).onSnapshot(snapshot=>{
+      if (!snapshot.empty) {
+        if (snapshot.data().myBuses.length>0) {
+          snapshot.data().myBuses.forEach((d) => {
+            if (d.distance < 1000 && snapshot.data().startedTrip == true) {
+
+              this.setState({nearby: true, count: this.state.count+1}, ()=>{
+                if (this.state.nearby && this.state.count<=1) {
+                  toast(d.fullName + " driving bus " + d.busNumplate + " is nearby. Get ready to board", {
+                    type: toast.TYPE.INFO,
+                    autoClose: 2500
+                  });
+                }
+              });
+
+            }else{
+              this.setState({nearby: false})
+            }
+          });
+        } else {
+          this.setState({count:0})
+        }
+
       }
-    });
+    })
+
+
+
 
   }
 
@@ -111,38 +136,47 @@ class Passenger extends React.Component {
 
   stopTracking = () => {
     let db = firebase.firestore();
-    this.setState({startedTrip: false, movingBuses:[]});
+    this.setState({startedTrip: false, movingBuses: []});
 
     navigator.geolocation.clearWatch(this.state.geoId);
-    db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false}).then(() => {
-      toast("We stopped tracking your location", {type: toast.TYPE.SUCCESS, autoClose: 2500});
+    db.collection(this.props.userType).doc(this.props.userId).update({startedTrip: false, myBuses:[]}).then(() => {
+      toast("We stopped tracking your location", {
+        type: toast.TYPE.SUCCESS,
+        autoClose: 2500
+      });
     })
   }
-
-
-
 
   selectDest = (e) => {
     e.preventDefault();
     let db = firebase.firestore();
     let myDest = e.target.elements.dest.value;
 
+    if (myDest == "") {
+      toast("Please select a destination", {
+        type: toast.TYPE.ERROR,
+        autoClose: 2500
+      });
+    } else {
 
-    if (navigator.geolocation) {
-      toast("Began tracking your location", {type: toast.TYPE.SUCCESS, autoClose: 2500});
-      let GeoId = navigator.geolocation.watchPosition(position => {
+      if (navigator.geolocation) {
+        toast("Began tracking your location", {
+          type: toast.TYPE.SUCCESS,
+          autoClose: 2500
+        });
+        let GeoId = navigator.geolocation.watchPosition(position => {
 
-        let location = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        this.setState({
-          currLocation: location
-        }, () => {
-          db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination": this.state.myDest, "startedTrip": this.state.startedTrip});
+          let location = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          this.setState({
+            currLocation: location
+          }, () => {
+            db.collection('passenger').doc(this.props.userId).update({"location": this.state.currLocation, "destination": this.state.myDest, "startedTrip": this.state.startedTrip});
 
-        })
-      }, (err) => {
+          })
+        }, (err) => {
           console.warn('ERROR(' + err.code + '): ' + err.message);
         }, {
           enableHighAccuracy: true,
@@ -150,24 +184,27 @@ class Passenger extends React.Component {
           maximumAge: 0
         })
 
-      this.setState({
-        geoId: GeoId
-      }, () => {
-        db.collection('passenger').doc(this.props.userId).update({geoId: this.state.geoId});
-      })
-    } else {
-      toast("Geolocation is not supported in your browser", {type: toast.TYPE.ERROR, autoClose: 2500});
-    }
-
-
         this.setState({
-          myDest: myDest,
-          startedTrip: true
+          geoId: GeoId
         }, () => {
-          this.getAllMovingBuses();
-
+          db.collection('passenger').doc(this.props.userId).update({geoId: this.state.geoId});
         })
-}
+      } else {
+        toast("Geolocation is not supported in your browser", {
+          type: toast.TYPE.ERROR,
+          autoClose: 2500
+        });
+      }
+
+      this.setState({
+        myDest: myDest,
+        startedTrip: true
+      }, () => {
+        this.getAllMovingBuses();
+
+      })
+    }
+  }
 
   getPassLocationFromDb = () => {
     let db = firebase.firestore();
@@ -190,15 +227,22 @@ class Passenger extends React.Component {
   handleEditProfile = (e) => {
     e.preventDefault();
     let db = firebase.firestore();
-    const fullName= e.target.elements.fullName.value;
-    const phoneNum= e.target.elements.phone.value;
+    const fullName = e.target.elements.fullName.value;
+    const phoneNum = e.target.elements.phone.value;
 
     this.setState({
-      fullName: fullName != ''? fullName: this.props.userName,
-      phoneNum: phoneNum != ''? phoneNum: this.props.userPhone
+      fullName: fullName != ''
+        ? fullName
+        : this.props.userName,
+      phoneNum: phoneNum != ''
+        ? phoneNum
+        : this.props.userPhone
     }, () => {
       db.collection(this.props.userType).doc(this.props.userId).update({fullName: this.state.fullName, phone: this.state.phoneNum}).then(() => {
-        toast("Success", {type: toast.TYPE.SUCCESS, autoClose: 2500});
+        toast("Success", {
+          type: toast.TYPE.SUCCESS,
+          autoClose: 2500
+        });
 
       })
     })
