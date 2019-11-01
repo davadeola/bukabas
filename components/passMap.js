@@ -72,7 +72,7 @@ render(){
       </div>
      </ReactMapGL>
 
-     <div style={{position: 'absolute', bottom: 0, left: 0, width:'100%'}}>
+     <div style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
     {this.state.showDriverInfo &&   <DriverInfo dropDriverInfo={this.dropDriverInfo} fullName={this.state.fullName} busNumplate={this.state.busNumplate} phone={this.state.phone} destination={this.state.destination} distance={this.state.distance} userType={this.props.userType}/>}
      </div>
      </div>

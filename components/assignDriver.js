@@ -20,7 +20,8 @@ class AssignDriver extends React.Component{
 
   render(){
     return(
-      <div className="container">
+      <div className="container text-center">
+        <img src="/static/images/assign.png" className="profile-img"/>
       <h1 className="text-center">Assign a driver to a bus</h1>
       <form className="login-form" onSubmit={this.props.handleAssignDriver}>
         <div className="row">
