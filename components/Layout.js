@@ -5,7 +5,7 @@ import Nav from './nav'
 
 const Layout = (props) => (<div>
   <Head>
-    <title>Home</title>
+    <title>Bukabas</title>
     <link rel="stylesheet" href="/static/bootstrap.min.css" key="test"/>
     <link rel="stylesheet" href="/static/react-toastify.css" key="css1"/>
     <link rel="stylesheet" href="/static/mapbox-gl.css" key="css3"/>
