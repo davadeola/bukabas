@@ -226,7 +226,7 @@ class Driver extends React.Component {
         db.collection("bus").where('driver', '==', this.props.userId).get().then(snapshot=>{
                if (!snapshot.empty) {
                  snapshot.forEach(doc=>{
-                   db.collection('bus').doc(doc.id).update({"driver": ''})
+                   db.collection('bus').doc(doc.id).update({"driver": '', "startedTrip": false})
                  })
                }
              })
