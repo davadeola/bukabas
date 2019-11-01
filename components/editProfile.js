@@ -6,7 +6,8 @@ import Layout from '../components/Layout'
 
 const EditProfile=(props)=>(
 
-      <div className="container ">
+      <div className="container text-center">
+        <img src="/static/images/edit.png" className="profile-img"/>
         <h1 className="text-center">Edit your profile</h1>
         <form className="login-form" onSubmit={props.handleEditProfile}>
           <div className="row">

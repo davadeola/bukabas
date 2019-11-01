@@ -10,7 +10,6 @@ const Home=()=>(
     <Layout>
 
         <TopNav/>
-        <div ></div>
         <div className="landing container-fluid" id="home-screen">
           <div className="row">
 

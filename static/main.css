@@ -60,7 +60,7 @@ a:hover{
 
   background-position: center;
   background-size: cover;
-  padding-bottom: 4em;
+  padding-bottom: 2em;
 }
 
 #home-screen .btn{
@@ -90,11 +90,12 @@ a:hover{
 .btn{
   color: #000;
   background-color: #34d7d7;
-  /* margin-left: 5%; */
+  margin-bottom: 5%;
   height: 3em;
   /* width:9.5em; */
   padding-left: 3em;
   padding-right: 3em;
+  border-radius: 35px;
   /* border: 1px solid white; */
 }
 
@@ -287,7 +288,7 @@ select{
   border: 1px solid #34d7d7;
   padding: .5em;
   margin: 2px;
-  width: 20em;
+  width: 17.5em;
 }
 
 .dest-card input[type="radio"]:checked+label{
@@ -334,6 +335,11 @@ select{
 .driver-info{
   background-color: white;
   z-index: 1000;
-  margin: 0 25% 0 25%;
+  margin-right: inherit;
+  /* margin: 0 25% 0 25%; */
   width: 20rem;
+  -webkit-box-shadow: 10px 10px 5px -9px rgba(0,0,0,1);
+-moz-box-shadow: 10px 10px 5px -9px rgba(0,0,0,1);
+box-shadow: 10px 10px 5px -9px rgba(0,0,0,1);
+
 }

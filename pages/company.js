@@ -155,9 +155,15 @@ handleAddBus=(e)=>{
 handleEditProfile=(e)=>{
   e.preventDefault();
   let db = firebase.firestore();
+  const fullName = e.target.elements.fullName.value;
+  const phoneNum = e.target.elements.phone.value;
   this.setState({
-    fullName: e.target.elements.fullName.value,
-    phoneNum: e.target.elements.phone.value
+    fullName:fullName != ''
+      ? fullName
+      : this.props.userName,
+    phoneNum:phoneNum != ''
+      ? phoneNum
+      : this.props.userPhone
   }, ()=>{
     db.collection(this.props.userType).doc(this.props.userId).update(
       {
@@ -177,6 +183,8 @@ handleEditProfile=(e)=>{
     })
 
   })
+  e.target.elements.fullName.value = "";
+  e.target.elements.phone.value = "";
 }
 
 getAllBuses=()=>{
@@ -294,11 +302,6 @@ getCoord=(driverId)=>{
                 </div>
               }
             <div className="row">
-
-              <div className="col-md-2">
-                <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/><h4>Menu</h4></button>
-              </div>
-
               <div className="col-md-12">
                 {displayView()}
               </div>

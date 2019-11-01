@@ -19,8 +19,10 @@ class SelectCompany extends React.Component{
     return(
       <div className="container ">
         <div className="row">
-          <div className="col-md-12">
-            <h1>Select the company you work for</h1>
+          <div className="col-md-12 text-center">
+            <img src="/static/images/selectComp.png" className="profile-img"/>
+            <h2>Select your driving company</h2>
+            <h4>You're working at <b>{this.props.currCompany}</b></h4>
           </div>
         </div>
 

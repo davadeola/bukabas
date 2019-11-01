@@ -38,7 +38,7 @@ render(){
          <NavigationControl captureClick={true}/>
        </div>
      </ReactMapGL>
-     <div style={{position: 'absolute', bottom: 0}}>
+     <div style={{position: 'absolute', bottom: 0,  width:'100%'}}>
        <DriverInfo fullName={this.props.fullName} busNumplate={this.props.busNumplate} phone={this.props.phone} destination={this.props.destination}/>
      </div>
      </div>

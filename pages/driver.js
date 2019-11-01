@@ -21,6 +21,7 @@ class Driver extends React.Component {
     display: '',
     companies: [],
     compFullName: '',
+    currCompany:'',
     busNumplate: '',
     fullName: '',
     phoneNum: '',
@@ -153,9 +154,34 @@ class Driver extends React.Component {
     this.getNumplate();
   }
 
+  getCurrentCompany=()=>{
+    let db = firebase.firestore();
+    let currCompany='';
+    let drivAccount = db.collection('driver').doc(this.props.userId).onSnapshot(doc=>{
+      if (doc.exists) {
+
+          currCompany = doc.data().compFullName;
+
+          db.collection('company').doc(currCompany).onSnapshot(doc=>{
+
+            if (doc.exists) {
+              this.setState({
+                currCompany: doc.data().fullName
+              })
+            }
+          })
+      }
+    })
+
+
+
+
+  }
+
   selectCompany = () => {
     this.setState({display: 'selectCompany', showMenu: false});
     this.getCompanyList();
+    this.getCurrentCompany();
   }
 
   selEditProfile = () => {
@@ -211,16 +237,29 @@ class Driver extends React.Component {
   handleEditProfile = (e) => {
     e.preventDefault();
     let db = firebase.firestore();
+    const fullName = e.target.elements.fullName.value;
+    const phoneNum = e.target.elements.phone.value;
+
     this.setState({
-      fullName: e.target.elements.fullName.value,
-      phoneNum: e.target.elements.phone.value
+      fullName: fullName != ''
+        ? fullName
+        : this.props.userName,
+      phoneNum: phoneNum != ''
+        ? phoneNum
+        : this.props.userPhone
     }, () => {
       db.collection(this.props.userType).doc(this.props.userId).update({fullName: this.state.fullName, phone: this.state.phoneNum}).then(() => {
-        toast("Success", {type: toast.TYPE.SUCCESS, autoClose: 2500});
+        toast("Success", {
+          type: toast.TYPE.SUCCESS,
+          autoClose: 2500
+        });
 
       })
     })
+    e.target.elements.fullName.value = "";
+    e.target.elements.phone.value = "";
   }
+
 
   render() {
     const displayView = () => {
@@ -229,7 +268,7 @@ class Driver extends React.Component {
       } else if (this.state.display == 'viewBus') {
         return (<ViewBus/>);
       } else if (this.state.display == 'selectCompany') {
-        return (<SelectCompany data={this.state.companies} handleSelectCompany={this.handleSelectCompany}/>);
+        return (<SelectCompany currCompany={this.state.currCompany} data={this.state.companies} handleSelectCompany={this.handleSelectCompany}/>);
       } else if (this.state.display == 'editProfile') {
         return (<EditProfile handleEditProfile={this.handleEditProfile}/>);
       } else {
@@ -244,10 +283,6 @@ class Driver extends React.Component {
           <MenuLayout showOverview={this.showOverview} profImg={this.props.profImg} dropMenu={this.dropMenu} selEditProfile={this.selEditProfile} display={this.state.display} selectStartTrip={this.selectStartTrip} selectViewBus={this.selectViewBus} userType={this.props.userType} selectCompany={this.selectCompany} userName={this.props.userName}/>
         </div>}
         <div className="row">
-
-
-
-
           <div className="col-md-12">
             {displayView()}
           </div>

@@ -94,8 +94,10 @@ class Login extends React.Component{
       <Layout>
       <TopNav/>
 
-      <div className="container loading">
+      <div className="container loading text-center">
+          <img src="/static/images/login.png" className="profile-img"/>
         <h1 className="text-center">Log into your account</h1>
+
         <form className="login-form" onSubmit={this.handleSignIn}>
           <div className="form-group row">
             <input name="email" type="email" placeholder="Enter your email" className="form-control"/>

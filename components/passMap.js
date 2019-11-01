@@ -24,7 +24,8 @@ class PassMap extends React.Component{
       busNumplate:'',
       destination:'',
       phone:'',
-      distance: 0
+      distance: 0,
+      showDriverInfo: false
     }
 
 
@@ -32,6 +33,13 @@ class PassMap extends React.Component{
       this.setState({viewport});
     }
 
+    showDriverInfo=()=>{
+      this.setState({showDriverInfo: true});
+    }
+
+    dropDriverInfo=()=>{
+      this.setState({showDriverInfo: false})
+    }
 
   selBusMap=(fullName)=>{
       this.setState({popupInfo: true, fullName: fullName});
@@ -39,7 +47,7 @@ class PassMap extends React.Component{
 
     showPopup=(bus)=>{
       this.setState({fullName: bus.fullName, busNumplate: bus.busNumplate, phone: bus.phone, destination: bus.destination, distance: bus.distance});
-
+      this.showDriverInfo();
     }
 
 render(){
@@ -64,8 +72,8 @@ render(){
       </div>
      </ReactMapGL>
 
-     <div style={{position: 'absolute', bottom: 0, left: 0}}>
-       <DriverInfo fullName={this.state.fullName} busNumplate={this.state.busNumplate} phone={this.state.phone} destination={this.state.destination} distance={this.state.distance} userType={this.props.userType}/>
+     <div style={{position: 'absolute', bottom: 0, left: 0, width:'100%'}}>
+    {this.state.showDriverInfo &&   <DriverInfo dropDriverInfo={this.dropDriverInfo} fullName={this.state.fullName} busNumplate={this.state.busNumplate} phone={this.state.phone} destination={this.state.destination} distance={this.state.distance} userType={this.props.userType}/>}
      </div>
      </div>
   )

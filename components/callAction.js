@@ -65,7 +65,7 @@ _isMounted=false;
           </Link>
           :
           <Link href='/signup'>
-            <a title='Sign up page'><button className="btn">Get started</button></a>
+            <a title='Sign up page'><button className="btn">Join the family</button></a>
           </Link>
         }
 

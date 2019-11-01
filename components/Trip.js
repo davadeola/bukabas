@@ -4,8 +4,8 @@ import DestCard from './destCard'
 
 const Trip=(props)=>(
 
-  <div className="container">
-
+  <div className="container text-center">
+    {props.destination && props.startedTrip && <img src="/static/images/moving.png" className="profile-img"/>}
     <h1>{props.destination && props.startedTrip ? "You are heading to " + props.destination : "Select your destination"}</h1>
 
   {!props.startedTrip &&

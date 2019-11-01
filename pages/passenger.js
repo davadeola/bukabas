@@ -275,12 +275,6 @@ class Passenger extends React.Component {
         }
 
         <div className="row">
-
-          <div className="col-md-2">
-            <button className="btn btn-menu btn-default nav-disp" onClick={this.showMenu}><img src="/static/images/menu.png" className="nav-icon"/>
-
-            </button>
-          </div>
           <div className="col-md-12">
             {displayView()}
           </div>
