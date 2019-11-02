@@ -46,7 +46,7 @@ const SignUpform=(props)=>(
               <button className="btn btn-warning" onClick={props.backToSelect}>Back</button>
             </div>
             <div className="col-sm-6">
-                <button type="submit" className="btn btn-primary">Create Account</button>
+                <button type="submit" className="btn btn-primary">Create</button>
             </div>
 
 
